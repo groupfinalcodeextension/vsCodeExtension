@@ -1,6 +1,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require("vscode");
+const consoleLogger = require("./consoleLogger")
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 function getAllLogStatements(document, documentText) {
@@ -49,6 +50,16 @@ function activate(context) {
         let workSpaceEdit = new vscode.WorkspaceEdit();
         deleteFoundLogStatements(workSpaceEdit, document.uri, logStatements);
     });
+
+    const consoleLogger = vscode.commands.registerCommand('extension.consoleLogger', () =>{
+        const editor = vscode.window.activeTextEditor;
+        if(!editor) {
+            return;
+        }
+        consoleLogger(editor)
+    })
+
+
     context.subscriptions.push(disposable);
     context.subscriptions.push(deleteLogStatements);
 }
