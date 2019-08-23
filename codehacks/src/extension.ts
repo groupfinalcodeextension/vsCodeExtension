@@ -15,6 +15,18 @@ function getAllLogStatements(document, documentText) {
     }
     return logStatements;
 }
+function getAllCommentLogStatements(document, documentText) {
+    let logStatements = [];
+    const logRegex = /[/][/]console.(log|debug|info|warn|error|assert|dir|dirxml|trace|group|groupEnd|time|timeEnd|profile|profileEnd|count)\((.*)\);?/g;
+    let match;
+    while (match = logRegex.exec(documentText)) {
+        let matchRange = new vscode.Range(document.positionAt(match.index), document.positionAt(match.index + match[0].length));
+        if (!matchRange.isEmpty) {
+            logStatements.push(matchRange);
+        }
+    }
+    return logStatements;
+}
 function deleteFoundLogStatements(workspace, docUri, logs) {
     logs.forEach((log) => {
         workspace.delete(docUri, log);
@@ -33,6 +45,22 @@ function commentFoundStatements(workspace, docUri, logs) {
         const documentText = editor.document.getText(log);
         // console.log(documentText)
         workspace.replace(docUri, log, `//${documentText}`);
+       
+    });
+    vscode.workspace.applyEdit(workspace)
+        .then(() => {
+            if (logs.length) {
+                vscode.window.showInformationMessage(`Comments ${logs.length} consoles`);
+            }
+        });
+}
+function uncommentFoundStatements(workspace, docUri, logs) {
+    const editor = vscode.window.activeTextEditor;
+ 
+    logs.forEach((log) => {
+        const documentText = editor.document.getText(log);
+        let text = documentText.slice(2);
+        workspace.replace(docUri, log, `${text}`);
        
     });
     vscode.workspace.applyEdit(workspace)
@@ -76,9 +104,21 @@ function activate(context) {
         let workSpaceEdit = new vscode.WorkspaceEdit();
         commentFoundStatements(workSpaceEdit, document.uri, logStatements);
     });
+    const uncommentLogStatements = vscode.commands.registerCommand('extension.uncommentAllLogStatements', () => {
+        const editor = vscode.window.activeTextEditor;
+        if (!editor) {
+            return;
+        }
+        const document = editor.document;
+        const documentText = editor.document.getText();
+        const logStatements = getAllCommentLogStatements(document, documentText);
+        let workSpaceEdit = new vscode.WorkspaceEdit();
+        uncommentFoundStatements(workSpaceEdit, document.uri, logStatements);
+    });
     context.subscriptions.push(disposable);
     context.subscriptions.push(deleteLogStatements);
     context.subscriptions.push(commentLogStatements);
+    context.subscriptions.push(uncommentLogStatements);
 
 }
 exports.activate = activate;
