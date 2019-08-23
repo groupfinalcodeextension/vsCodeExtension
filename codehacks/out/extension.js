@@ -1,7 +1,19 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require("vscode");
+const { exec, execFile } = require("child_process");
+const consoleLogger_1 = require("./consoleLogger");
+// var consoleLogger = require("./consoleLogger")
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 function getAllLogStatements(document, documentText) {
@@ -50,8 +62,56 @@ function activate(context) {
         let workSpaceEdit = new vscode.WorkspaceEdit();
         deleteFoundLogStatements(workSpaceEdit, document.uri, logStatements);
     });
+    const addLogStatements = vscode.commands.registerCommand('extension.addLogStatements', () => __awaiter(this, void 0, void 0, function* () {
+        const editor = vscode.window.activeTextEditor;
+        if (!editor) {
+            return;
+        }
+        yield consoleLogger_1.default(editor);
+    }));
+    const installDependencies = vscode.commands.registerCommand('extension.installDependencies', () => {
+        const editor = vscode.window.activeTextEditor;
+        var documentText = editor.document.getText();
+        var document = editor.document;
+        let requireStatements = [];
+        const requireRegex = /require\(.*?\)/g;
+        let match;
+        while (match = requireRegex.exec(documentText)) {
+            // let matchRange = new vscode.Range(document.positionAt(match.index), document.positionAt(match.index + match[0].length));
+            // if (!matchRange.isEmpty) {
+            //     requireStatements.push(matchRange);
+            // }
+            requireStatements.push(match[0]);
+        }
+        // console.log(requireStatements)
+        for (var i = 0; i < requireStatements.length; i++) {
+            var regexx = /(\.)|(\/)/;
+            if (regexx.test(requireStatements[i])) {
+                requireStatements.splice(i, 1);
+                i = 0;
+            }
+        }
+        console.log(requireStatements);
+        var myPath = vscode.workspace.rootPath;
+        console.log(myPath);
+        const child = exec('ls', { cwd: myPath }, (error, stdout, stderr) => {
+            if (error) {
+                throw error;
+            }
+            // var files = stdout.split("\n")
+            var regex = /(node_modules|package.json)/;
+            if (regex.test(stdout)) {
+                vscode.window.activeTerminal.sendText("ls");
+            }
+            else {
+                vscode.window.showErrorMessage("ERROR JING");
+            }
+        });
+    });
+    context.subscriptions.push(installDependencies);
     context.subscriptions.push(disposable);
     context.subscriptions.push(deleteLogStatements);
+    context.subscriptions.push(addLogStatements);
 }
 exports.activate = activate;
 // this method is called when your extension is deactivated

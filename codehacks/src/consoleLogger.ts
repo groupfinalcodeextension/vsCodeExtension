@@ -1,7 +1,9 @@
+const vscode = require("vscode")
 function consoleLogger(editor) {
     if(!editor) {
         return;
     }
+    console.log("ASDASDASDASD")
     const selection = editor.selection;
     var text = editor.document.getText(selection);
     const cursor = selection.start
@@ -33,4 +35,4 @@ function consoleLogger(editor) {
     })
 }
 
-module.exports = consoleLogger
+export default consoleLogger

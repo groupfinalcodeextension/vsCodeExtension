@@ -11,7 +11,9 @@
 	],
 	"activationEvents": [
 		"onCommand:extension.helloWorld",
-		"onCommand:extension.deleteAllLogStatements"
+		"onCommand:extension.deleteAllLogStatements",
+		"onCommand:extension.addLogStatements",
+		"onCommand:extension.installDependencies"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -23,6 +25,14 @@
 			{
 				"command": "extension.deleteAllLogStatements",
 				"title": "Delete Log"
+			},
+			{
+				"command": "extension.addLogStatements",
+				"title": "Console Logger"
+			},
+			{
+				"command": "extension.installDependencies",
+				"title": "Install Dependencies"
 			}
 		]
 	},
