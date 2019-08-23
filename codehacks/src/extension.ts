@@ -17,7 +17,7 @@ function getAllLogStatements(document, documentText) {
 }
 function getAllCommentLogStatements(document, documentText) {
     let logStatements = [];
-    const logRegex = /[/][/]console.(log|debug|info|warn|error|assert|dir|dirxml|trace|group|groupEnd|time|timeEnd|profile|profileEnd|count)\((.*)\);?/g;
+    const logRegex = /[/][/]console|[/][/] console.(log|debug|info|warn|error|assert|dir|dirxml|trace|group|groupEnd|time|timeEnd|profile|profileEnd|count)\((.*)\);?/g;
     let match;
     while (match = logRegex.exec(documentText)) {
         let matchRange = new vscode.Range(document.positionAt(match.index), document.positionAt(match.index + match[0].length));
