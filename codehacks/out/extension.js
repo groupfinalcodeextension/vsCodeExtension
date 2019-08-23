@@ -27,6 +27,20 @@ function deleteFoundLogStatements(workspace, docUri, logs) {
         }
     });
 }
+function commentFoundStatements(workspace, docUri, logs) {
+    const editor = vscode.window.activeTextEditor;
+    logs.forEach((log) => {
+        const documentText = editor.document.getText(log);
+        // console.log(documentText)
+        workspace.replace(docUri, log, `//${documentText}`);
+    });
+    vscode.workspace.applyEdit(workspace)
+        .then(() => {
+        if (logs.length) {
+            vscode.window.showInformationMessage(`Comments ${logs.length} consoles`);
+        }
+    });
+}
 function activate(context) {
     // Use the console to output diagnostic information (console.log) and errors (console.error)
     // This line of code will only be executed once when your extension is activated
@@ -37,7 +51,7 @@ function activate(context) {
     let disposable = vscode.commands.registerCommand('extension.helloWorld', () => {
         // The code you place here will be executed every time your command is executed
         // Display a message box to the user
-        vscode.window.showInformationMessage('Hello Welcome to CodeHacks!');
+        vscode.window.showInformationMessage('Hello Welcome to CodeHacks!!!!');
     });
     const deleteLogStatements = vscode.commands.registerCommand('extension.deleteAllLogStatements', () => {
         const editor = vscode.window.activeTextEditor;
@@ -50,8 +64,20 @@ function activate(context) {
         let workSpaceEdit = new vscode.WorkspaceEdit();
         deleteFoundLogStatements(workSpaceEdit, document.uri, logStatements);
     });
+    const commentLogStatements = vscode.commands.registerCommand('extension.commentAllLogStatements', () => {
+        const editor = vscode.window.activeTextEditor;
+        if (!editor) {
+            return;
+        }
+        const document = editor.document;
+        const documentText = editor.document.getText();
+        const logStatements = getAllLogStatements(document, documentText);
+        let workSpaceEdit = new vscode.WorkspaceEdit();
+        commentFoundStatements(workSpaceEdit, document.uri, logStatements);
+    });
     context.subscriptions.push(disposable);
     context.subscriptions.push(deleteLogStatements);
+    context.subscriptions.push(commentLogStatements);
 }
 exports.activate = activate;
 // this method is called when your extension is deactivated

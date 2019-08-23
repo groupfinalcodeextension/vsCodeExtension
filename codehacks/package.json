@@ -11,7 +11,9 @@
 	],
 	"activationEvents": [
 		"onCommand:extension.helloWorld",
-		"onCommand:extension.deleteAllLogStatements"
+		"onCommand:extension.deleteAllLogStatements",
+		"onCommand:extension.commentAllLogStatements",
+		"onCommand:extension.uncommentAllLogStatements"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -23,6 +25,14 @@
 			{
 				"command": "extension.deleteAllLogStatements",
 				"title": "Delete Log"
+			},
+			{
+				"command": "extension.commentAllLogStatements",
+				"title": "Comment Log"
+			},
+			{
+				"command": "extension.uncommentAllLogStatements",
+				"title": "Uncomment Log"
 			}
 		]
 	},
