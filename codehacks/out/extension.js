@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require("vscode");
 const { exec, execFile } = require("child_process");
+const path = require("path");
 const consoleLogger_1 = require("./consoleLogger");
 // var consoleLogger = require("./consoleLogger")
 // this method is called when your extension is activated
@@ -73,17 +74,18 @@ function activate(context) {
         const editor = vscode.window.activeTextEditor;
         var documentText = editor.document.getText();
         var document = editor.document;
-        let requireStatements = [];
+        var requireStatements = [];
+        var importStatements = [];
         const requireRegex = /require\(.*?\)/g;
-        let match;
-        while (match = requireRegex.exec(documentText)) {
-            // let matchRange = new vscode.Range(document.positionAt(match.index), document.positionAt(match.index + match[0].length));
-            // if (!matchRange.isEmpty) {
-            //     requireStatements.push(matchRange);
-            // }
-            requireStatements.push(match[0]);
+        var matchRequire;
+        while (matchRequire = requireRegex.exec(documentText)) {
+            requireStatements.push(matchRequire[0]);
         }
-        // console.log(requireStatements)
+        const importRegex = /import .*?from (\'.*?\'|\".*?\")/g;
+        var matchImport;
+        while (matchImport = importRegex.exec(documentText)) {
+            importStatements.push(matchImport[0]);
+        }
         for (var i = 0; i < requireStatements.length; i++) {
             var regexx = /(\.)|(\/)/;
             if (regexx.test(requireStatements[i])) {
@@ -91,22 +93,53 @@ function activate(context) {
                 i = 0;
             }
         }
-        console.log(requireStatements);
-        var myPath = vscode.workspace.rootPath;
-        console.log(myPath);
-        const child = exec('ls', { cwd: myPath }, (error, stdout, stderr) => {
-            if (error) {
-                throw error;
+        for (var i = 0; i < importStatements.length; i++) {
+            var regexx = /(\.)|(\/)/;
+            if (regexx.test(importStatements[i])) {
+                importStatements.splice(i, 1);
+                i = 0;
             }
-            // var files = stdout.split("\n")
-            var regex = /(node_modules|package.json)/;
-            if (regex.test(stdout)) {
-                vscode.window.activeTerminal.sendText("ls");
-            }
-            else {
-                vscode.window.showErrorMessage("ERROR JING");
-            }
-        });
+        }
+        console.log(importStatements);
+        var requireString = requireStatements.join(" ");
+        var modulez = [];
+        var regex2 = /(\'.*?\'|\".*?\")/g;
+        var match2;
+        while (match2 = regex2.exec(requireString)) {
+            modulez.push(match2[0].replace(/[^a-zA-Z0-9\- ]/g, ""));
+        }
+        var importString = importStatements.join(" ");
+        console.log(importString);
+        var match3;
+        while (match3 = regex2.exec(importString)) {
+            modulez.push(match3[0].replace(/[^a-zA-Z0-9\-@\/ ]/g, ""));
+        }
+        console.log(modulez);
+        var currentlyOpenTabfilePath = vscode.window.activeTextEditor.document.fileName;
+        var temp = currentlyOpenTabfilePath.split("/");
+        temp.splice(temp.length - 1, 1);
+        var myPath = temp.join("/");
+        var dependencies = modulez.join(" ");
+        // console.log(vscode.window.activeTerminal, "TERMINAL")
+        var terminal = null;
+        if (vscode.window.activeTerminal) {
+            console.log(vscode.window.activeTerminal.name);
+            terminal = vscode.window.activeTerminal;
+        }
+        else {
+            terminal = vscode.window.createTerminal({
+                name: "CodeHacks",
+                hideFromUser: false
+            });
+        }
+        console.log(dependencies);
+        if (modulez.length > 0) {
+            terminal.show();
+            terminal.sendText(`cd ${myPath} && npm install ${dependencies}`);
+        }
+        else {
+            vscode.window.showInformationMessage("No dependencies found in current file");
+        }
     });
     context.subscriptions.push(installDependencies);
     context.subscriptions.push(disposable);
