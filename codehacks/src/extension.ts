@@ -7,6 +7,7 @@ const {exec, execFile} = require("child_process");
 const path = require("path");
 import consoleLogger from "./consoleLogger";
 import InstallDependencies from "./installDependencies"
+import runSelectedCode from "./runSelectedCode"
 // var consoleLogger = require("./consoleLogger")
 const fs = require('fs');
 const {basename,dirname,extname,join} = require('path');
@@ -118,49 +119,12 @@ function activate(context) {
         
     });
     
-    const runCodeByBlock = vscode.commands.registerCommand('extension.runCode', () => {
-        let tmpFile = false;
+    const runCodeByBlock = vscode.commands.registerCommand('extension.runCode', async() => {
         const editor = vscode.window.activeTextEditor;
         if(!editor) {
             return ;
         }
-        const document = editor.document;
-        let selectedText = editor.document.getText(rangeBlock());
-        
-        const { exec } = require('child_process');
-        const ls = exec('ls');
-        // console.log(document.fileName,"disini");
-        let fileName = document.fileName;
-        // console.log(selectedText);
-        // console.log(fileName);
-        let codeFile = join(dirname(fileName), 'tempFileCodeHacks.js');
-
-        console.log(vscode.window.activeTerminal);
-        let terminal = null;
-        if(vscode.window.activeTerminal) {
-            terminal = vscode.window.activeTerminal;
-        } else {
-            terminal = vscode.window.createTerminal({
-                name: "CodeHacks",
-                hideFromUser: false
-            });
-        }
-
-        fs.writeFile(codeFile, selectedText, (err) =>{
-            if(err){
-                console.log(err);
-            }
-            terminal.show();
-            terminal.sendText(`node ${codeFile}`);
-            setTimeout(() => {
-                fs.unlink(codeFile, (err) => {
-                    if(err) {
-                        console.log(err);
-                    }
-                    console.log('sip');
-                }); 
-            },700);
-        });
+       await runSelectedCode(editor)
     });
     context.subscriptions.push(disposable);
     context.subscriptions.push(runCodeByBlock);
