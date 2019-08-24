@@ -14,7 +14,9 @@
 		"onCommand:extension.helloWorld",
 		"onCommand:extension.deleteAllLogStatements",
 		"onCommand:extension.addLogStatements",
-		"onCommand:extension.installDependencies"
+		"onCommand:extension.installDependencies",
+		"onCommand:extension.commentAllLogStatements",
+		"onCommand:extension.uncommentAllLogStatements"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -38,6 +40,14 @@
 			{
 				"command": "extension.runCode",
 				"title": "Run Code Hacks"
+			},
+			{
+				"command": "extension.commentAllLogStatements",
+				"title": "Comment Log"
+			},
+			{
+				"command": "extension.uncommentAllLogStatements",
+				"title": "Uncomment Log"
 			}
 		]
 	},
