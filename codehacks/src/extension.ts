@@ -179,7 +179,7 @@ function activate(context) {
             terminal = vscode.window.createTerminal({
                 name: "CodeHacks",
                 hideFromUser: false
-            })
+            });
         }
         console.log(dependencies)
         if(modulez.length > 0) {
