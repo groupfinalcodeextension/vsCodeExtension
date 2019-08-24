@@ -10,6 +10,7 @@
 		"Other"
 	],
 	"activationEvents": [
+		"onCommand:extension.runCode",
 		"onCommand:extension.helloWorld",
 		"onCommand:extension.deleteAllLogStatements",
 		"onCommand:extension.addLogStatements",
@@ -33,6 +34,10 @@
 			{
 				"command": "extension.installDependencies",
 				"title": "Install Dependencies"
+			},
+			{
+				"command": "extension.runCode",
+				"title": "Run Code Hacks"
 			}
 		]
 	},
@@ -53,5 +58,9 @@
 		"typescript": "^3.3.1",
 		"tslint": "^5.12.1",
 		"vscode-test": "^1.0.2"
+	},
+	"dependencies": {
+		"child_process": "^1.0.2",
+		"path": "^0.12.7"
 	}
 }
