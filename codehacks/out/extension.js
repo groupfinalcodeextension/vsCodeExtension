@@ -14,6 +14,7 @@ const vscode = require("vscode");
 const { exec, execFile } = require("child_process");
 const path = require("path");
 const consoleLogger_1 = require("./consoleLogger");
+const installDependencies_1 = require("./installDependencies");
 // var consoleLogger = require("./consoleLogger")
 const fs = require('fs');
 const { basename, dirname, extname, join } = require('path');
@@ -103,77 +104,13 @@ function activate(context) {
         }
         yield consoleLogger_1.default(editor);
     }));
-    const installDependencies = vscode.commands.registerCommand('extension.installDependencies', () => {
+    const installDependencies = vscode.commands.registerCommand('extension.installDependencies', () => __awaiter(this, void 0, void 0, function* () {
         const editor = vscode.window.activeTextEditor;
-        var documentText = editor.document.getText();
-        var document = editor.document;
-        var requireStatements = [];
-        var importStatements = [];
-        const requireRegex = /require\(.*?\)/g;
-        var matchRequire;
-        while (matchRequire = requireRegex.exec(documentText)) {
-            requireStatements.push(matchRequire[0]);
+        if (!editor) {
+            return;
         }
-        const importRegex = /import .*?from (\'.*?\'|\".*?\")/g;
-        var matchImport;
-        while (matchImport = importRegex.exec(documentText)) {
-            importStatements.push(matchImport[0]);
-        }
-        for (var i = 0; i < requireStatements.length; i++) {
-            var regexx = /(\.)|(\/)/;
-            if (regexx.test(requireStatements[i])) {
-                requireStatements.splice(i, 1);
-                i = 0;
-            }
-        }
-        for (var i = 0; i < importStatements.length; i++) {
-            var regexx = /(\.)|(\/)/;
-            if (regexx.test(importStatements[i])) {
-                importStatements.splice(i, 1);
-                i = 0;
-            }
-        }
-        console.log(importStatements);
-        var requireString = requireStatements.join(" ");
-        var modulez = [];
-        var regex2 = /(\'.*?\'|\".*?\")/g;
-        var match2;
-        while (match2 = regex2.exec(requireString)) {
-            modulez.push(match2[0].replace(/[^a-zA-Z0-9\- ]/g, ""));
-        }
-        var importString = importStatements.join(" ");
-        console.log(importString);
-        var match3;
-        while (match3 = regex2.exec(importString)) {
-            modulez.push(match3[0].replace(/[^a-zA-Z0-9\-@\/ ]/g, ""));
-        }
-        console.log(modulez);
-        var currentlyOpenTabfilePath = vscode.window.activeTextEditor.document.fileName;
-        var temp = currentlyOpenTabfilePath.split("/");
-        temp.splice(temp.length - 1, 1);
-        var myPath = temp.join("/");
-        var dependencies = modulez.join(" ");
-        // console.log(vscode.window.activeTerminal, "TERMINAL")
-        var terminal = null;
-        if (vscode.window.activeTerminal) {
-            console.log(vscode.window.activeTerminal.name);
-            terminal = vscode.window.activeTerminal;
-        }
-        else {
-            terminal = vscode.window.createTerminal({
-                name: "CodeHacks",
-                hideFromUser: false
-            });
-        }
-        console.log(dependencies);
-        if (modulez.length > 0) {
-            terminal.show();
-            terminal.sendText(`cd ${myPath} && npm install ${dependencies}`);
-        }
-        else {
-            vscode.window.showInformationMessage("No dependencies found in current file");
-        }
-    });
+        yield installDependencies_1.default(editor);
+    }));
     const runCodeByBlock = vscode.commands.registerCommand('extension.runCode', () => {
         let tmpFile = false;
         const editor = vscode.window.activeTextEditor;
