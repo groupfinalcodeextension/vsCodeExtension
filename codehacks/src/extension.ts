@@ -6,6 +6,7 @@ const vscode = require("vscode");
 const { exec, execFile } = require("child_process");
 const path = require("path");
 import consoleLogger from "./consoleLogger";
+import InstallDependencies from "./installDependencies"
 // var consoleLogger = require("./consoleLogger")
 const fs = require('fs');
 const { basename, dirname, extname, join } = require('path');
@@ -177,6 +178,7 @@ function activate(context) {
         await consoleLogger(editor);
     });
 
+<<<<<<< HEAD
     const installDependencies = vscode.commands.registerCommand('extension.installDependencies', () => {
         const editor = vscode.window.activeTextEditor;
 
@@ -257,6 +259,15 @@ function activate(context) {
         } else {
             vscode.window.showInformationMessage("No dependencies found in current file")
         }
+=======
+    const installDependencies = vscode.commands.registerCommand('extension.installDependencies', async() =>{
+        const editor = vscode.window.activeTextEditor;
+        if(!editor) {
+            return;
+        }
+        await InstallDependencies(editor);
+        
+>>>>>>> c9654ed7d8888424b3575a259bf65eb4c8cd0f93
     });
 
     const runCodeByBlock = vscode.commands.registerCommand('extension.runCode', () => {
