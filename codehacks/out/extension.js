@@ -1,6 +1,8 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
+const path_1 = require("path");
 const vscode = require("vscode");
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -67,6 +69,16 @@ function uncommentFoundStatements(workspace, docUri, logs) {
         }
     });
 }
+function getCodeFileAndExecute() {
+    let selection;
+    const activeTextEditor = vscode.window.activeTextEditor;
+    if (activeTextEditor) {
+        selection = activeTextEditor;
+    }
+    // console.log(selection._documentData._lines)
+    let data = eval(selection._documentData._lines[0]);
+    // console.log(data,"cek bos");
+}
 function activate(context) {
     // Use the console to output diagnostic information (console.log) and errors (console.error)
     // This line of code will only be executed once when your extension is activated
@@ -77,6 +89,18 @@ function activate(context) {
     let disposable = vscode.commands.registerCommand('extension.helloWorld', () => {
         // The code you place here will be executed every time your command is executed
         // Display a message box to the user
+        // const { execFile } = require('child_process');
+        // const child = execFile('pwd', (error, stdout, stderr) => {
+        //     if (error) {
+        //       throw error;
+        //     }
+        //     console.log(stdout);
+        //   });
+        const editor = vscode.window.activeTextEditor;
+        let dokumen = editor._documentData._document;
+        const fileExtension = path_1.extname(dokumen.fileName);
+        console.log(fileExtension);
+        getCodeFileAndExecute();
         vscode.window.showInformationMessage('Hello Welcome to CodeHacks!!!!');
     });
     const deleteLogStatements = vscode.commands.registerCommand('extension.deleteAllLogStatements', () => {

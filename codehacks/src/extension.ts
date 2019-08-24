@@ -1,5 +1,6 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
+import { basename, dirname, extname, join } from "path";
 const vscode = require("vscode");
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -40,12 +41,12 @@ function deleteFoundLogStatements(workspace, docUri, logs) {
 }
 function commentFoundStatements(workspace, docUri, logs) {
     const editor = vscode.window.activeTextEditor;
- 
+
     logs.forEach((log) => {
         const documentText = editor.document.getText(log);
         // console.log(documentText)
         workspace.replace(docUri, log, `//${documentText}`);
-       
+
     });
     vscode.workspace.applyEdit(workspace)
         .then(() => {
@@ -56,12 +57,12 @@ function commentFoundStatements(workspace, docUri, logs) {
 }
 function uncommentFoundStatements(workspace, docUri, logs) {
     const editor = vscode.window.activeTextEditor;
- 
+
     logs.forEach((log) => {
         const documentText = editor.document.getText(log);
         let text = documentText.slice(2);
         workspace.replace(docUri, log, `${text}`);
-       
+
     });
     vscode.workspace.applyEdit(workspace)
         .then(() => {
@@ -69,6 +70,17 @@ function uncommentFoundStatements(workspace, docUri, logs) {
                 vscode.window.showInformationMessage(`Comments ${logs.length} consoles`);
             }
         });
+}
+function getCodeFileAndExecute() {
+    let selection;
+    const activeTextEditor = vscode.window.activeTextEditor;
+    if(activeTextEditor){
+        selection = activeTextEditor;
+    }
+    // console.log(selection._documentData._lines)
+    let data = eval(selection._documentData._lines[0]);
+    // console.log(data,"cek bos");
+
 }
 function activate(context) {
     // Use the console to output diagnostic information (console.log) and errors (console.error)
@@ -80,6 +92,18 @@ function activate(context) {
     let disposable = vscode.commands.registerCommand('extension.helloWorld', () => {
         // The code you place here will be executed every time your command is executed
         // Display a message box to the user
+        // const { execFile } = require('child_process');
+        // const child = execFile('pwd', (error, stdout, stderr) => {
+        //     if (error) {
+        //       throw error;
+        //     }
+        //     console.log(stdout);
+        //   });
+        const editor = vscode.window.activeTextEditor;
+        let dokumen = editor._documentData._document
+        const fileExtension = extname(dokumen.fileName)
+        console.log(fileExtension)
+        getCodeFileAndExecute()
         vscode.window.showInformationMessage('Hello Welcome to CodeHacks!!!!');
     });
     const deleteLogStatements = vscode.commands.registerCommand('extension.deleteAllLogStatements', () => {
