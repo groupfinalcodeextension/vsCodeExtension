@@ -23,7 +23,7 @@ function InstallDependencies(editor) {
             var regexx = /(\.)|(\/)/
             if(regexx.test(requireStatements[i])) {
                 requireStatements.splice(i, 1)
-                i = 0
+                i = -1
             }
         }
 
@@ -31,7 +31,7 @@ function InstallDependencies(editor) {
             var regexx = /(\.)|(\/)/;
             if(regexx.test(importStatements[i])) {
                 importStatements.splice(i, 1);
-                i = 0
+                i = -1
             }
         }
         console.log(importStatements);
@@ -69,7 +69,7 @@ function InstallDependencies(editor) {
                 hideFromUser: false
             })
         }
-        console.log(dependencies)
+        // console.log(dependencies)
         if(modulez.length > 0) {
             terminal.show()
             terminal.sendText(`cd ${myPath} && npm install ${dependencies}`)
