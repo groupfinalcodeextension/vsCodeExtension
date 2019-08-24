@@ -15,6 +15,9 @@ const { exec, execFile } = require("child_process");
 const path = require("path");
 const consoleLogger_1 = require("./consoleLogger");
 // var consoleLogger = require("./consoleLogger")
+const fs = require('fs');
+const { basename, dirname, extname, join } = require('path');
+// import rangeBlock from '../src/codeRunner';
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 function getAllLogStatements(document, documentText) {
@@ -39,6 +42,36 @@ function deleteFoundLogStatements(workspace, docUri, logs) {
             vscode.window.showInformationMessage(`Deleted ${logs.length} consoles`);
         }
     });
+}
+// const insertText = (val) => {
+//     const editor = vscode.window.activeTextEditor;
+//     if (!editor) {
+//         vscode.window.showErrorMessage('Can\'t insert log because no document is open');
+//         return;
+//     }
+//     const selection = editor.selection;
+//     const range = new vscode.Range(selection.start, selection.end);
+//     editor.edit((editBuilder) => {
+//         editBuilder.replace(range, val);
+//     });
+// }
+function rangeBlock() {
+    const editor = vscode.window.activeTextEditor;
+    if (!editor) {
+        return;
+    }
+    const selection = editor.selection;
+    const range = new vscode.Range(selection.start, selection.end);
+    console.log(range);
+    return range;
+}
+function deleteFile(file) {
+    if (file) {
+        fs.unlinkSync(file);
+    }
+    else {
+        console.log('gagal');
+    }
 }
 function activate(context) {
     // Use the console to output diagnostic information (console.log) and errors (console.error)
@@ -141,8 +174,51 @@ function activate(context) {
             vscode.window.showInformationMessage("No dependencies found in current file");
         }
     });
-    context.subscriptions.push(installDependencies);
+    const runCodeByBlock = vscode.commands.registerCommand('extension.runCode', () => {
+        let tmpFile = false;
+        const editor = vscode.window.activeTextEditor;
+        if (!editor) {
+            return;
+        }
+        const document = editor.document;
+        let selectedText = editor.document.getText(rangeBlock());
+        const { exec } = require('child_process');
+        const ls = exec('ls');
+        // console.log(document.fileName,"disini");
+        let fileName = document.fileName;
+        // console.log(selectedText);
+        // console.log(fileName);
+        let codeFile = join(dirname(fileName), 'tempFileCodeHacks.js');
+        console.log(vscode.window.activeTerminal);
+        let terminal = null;
+        if (vscode.window.activeTerminal) {
+            terminal = vscode.window.activeTerminal;
+        }
+        else {
+            terminal = vscode.window.createTerminal({
+                name: "CodeHacks",
+                hideFromUser: false
+            });
+        }
+        fs.writeFile(codeFile, selectedText, (err) => {
+            if (err) {
+                console.log(err);
+            }
+            terminal.show();
+            terminal.sendText(`node ${codeFile}`);
+            setTimeout(() => {
+                fs.unlink(codeFile, (err) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                    console.log('sip');
+                });
+            }, 700);
+        });
+    });
     context.subscriptions.push(disposable);
+    context.subscriptions.push(runCodeByBlock);
+    context.subscriptions.push(installDependencies);
     context.subscriptions.push(deleteLogStatements);
     context.subscriptions.push(addLogStatements);
 }
