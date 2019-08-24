@@ -1,20 +1,31 @@
-# codehacks README
+# Code Hacks
 
-This is the README for your extension "codehacks". After writing up a brief description, we recommend including the following sections.
+## Intro
+
+This extension will help you clean your `JavaScript` code from dummy console.log, creating you a console.log by blocking the lines, run a function etc, installing dependencies just by require it on your code etc.
+
+Here is the direct link to our website 
+And Here is the direct link to marketplace
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+<ul>
+  <li>Delete dummy console.log to clean your code</li>
+  <li>Generate a console.log on your code by blocking the lines</li>
+  <li>Installing dependencies just by require it on your code</li>
+  <li>Runing a selected function just by block it</li>
+  <li>Comment all console.log</li>
+  <li>Uncomment all console.log</li>
+</ul>
 
-For example if there is an image subfolder under your extension project workspace:
+## Usage
 
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
-
-## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+### Delete dummy console.log
+  <ul>
+    <li>Use shotcut `CTRL + SHIFT + P`</li> 
+    <li>Then input `Delete log` and press enter or click on the suggestion</li>
+  </li>
+  <img src="assets/deletelog.gif" width="800" >
 
 ## Extension Settings
 
