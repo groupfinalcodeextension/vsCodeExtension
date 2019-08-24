@@ -32,6 +32,18 @@ function getAllLogStatements(document, documentText) {
     }
     return logStatements;
 }
+function getAllCommentLogStatements(document, documentText) {
+    let logStatements = [];
+    const logRegex = /[/][/]console|[/][/] console.(log|debug|info|warn|error|assert|dir|dirxml|trace|group|groupEnd|time|timeEnd|profile|profileEnd|count)\((.*)\);?/g;
+    let match;
+    while (match = logRegex.exec(documentText)) {
+        let matchRange = new vscode.Range(document.positionAt(match.index), document.positionAt(match.index + match[0].length));
+        if (!matchRange.isEmpty) {
+            logStatements.push(matchRange);
+        }
+    }
+    return logStatements;
+}
 function deleteFoundLogStatements(workspace, docUri, logs) {
     logs.forEach((log) => {
         workspace.delete(docUri, log);
@@ -40,6 +52,34 @@ function deleteFoundLogStatements(workspace, docUri, logs) {
         .then(() => {
         if (logs.length) {
             vscode.window.showInformationMessage(`Deleted ${logs.length} consoles`);
+        }
+    });
+}
+function commentFoundStatements(workspace, docUri, logs) {
+    const editor = vscode.window.activeTextEditor;
+    logs.forEach((log) => {
+        const documentText = editor.document.getText(log);
+        // console.log(documentText)
+        workspace.replace(docUri, log, `//${documentText}`);
+    });
+    vscode.workspace.applyEdit(workspace)
+        .then(() => {
+        if (logs.length) {
+            vscode.window.showInformationMessage(`Comments ${logs.length} consoles`);
+        }
+    });
+}
+function uncommentFoundStatements(workspace, docUri, logs) {
+    const editor = vscode.window.activeTextEditor;
+    logs.forEach((log) => {
+        const documentText = editor.document.getText(log);
+        let text = documentText.slice(2);
+        workspace.replace(docUri, log, `${text}`);
+    });
+    vscode.workspace.applyEdit(workspace)
+        .then(() => {
+        if (logs.length) {
+            vscode.window.showInformationMessage(`Uncomments ${logs.length} consoles`);
         }
     });
 }
@@ -83,7 +123,8 @@ function activate(context) {
     let disposable = vscode.commands.registerCommand('extension.helloWorld', () => {
         // The code you place here will be executed every time your command is executed
         // Display a message box to the user
-        vscode.window.showInformationMessage('Hello Welcome to CodeHacks!');
+        console.log("ASDASDSDA");
+        vscode.window.showInformationMessage('Hello Welcome to CodeHacks!!!!');
     });
     const deleteLogStatements = vscode.commands.registerCommand('extension.deleteAllLogStatements', () => {
         const editor = vscode.window.activeTextEditor;
@@ -95,6 +136,28 @@ function activate(context) {
         const logStatements = getAllLogStatements(document, documentText);
         let workSpaceEdit = new vscode.WorkspaceEdit();
         deleteFoundLogStatements(workSpaceEdit, document.uri, logStatements);
+    });
+    const commentLogStatements = vscode.commands.registerCommand('extension.commentAllLogStatements', () => {
+        const editor = vscode.window.activeTextEditor;
+        if (!editor) {
+            return;
+        }
+        const document = editor.document;
+        const documentText = editor.document.getText();
+        const logStatements = getAllLogStatements(document, documentText);
+        let workSpaceEdit = new vscode.WorkspaceEdit();
+        commentFoundStatements(workSpaceEdit, document.uri, logStatements);
+    });
+    const uncommentLogStatements = vscode.commands.registerCommand('extension.uncommentAllLogStatements', () => {
+        const editor = vscode.window.activeTextEditor;
+        if (!editor) {
+            return;
+        }
+        const document = editor.document;
+        const documentText = editor.document.getText();
+        const logStatements = getAllCommentLogStatements(document, documentText);
+        let workSpaceEdit = new vscode.WorkspaceEdit();
+        uncommentFoundStatements(workSpaceEdit, document.uri, logStatements);
     });
     const addLogStatements = vscode.commands.registerCommand('extension.addLogStatements', () => __awaiter(this, void 0, void 0, function* () {
         const editor = vscode.window.activeTextEditor;
@@ -221,6 +284,8 @@ function activate(context) {
     context.subscriptions.push(installDependencies);
     context.subscriptions.push(deleteLogStatements);
     context.subscriptions.push(addLogStatements);
+    context.subscriptions.push(commentLogStatements);
+    context.subscriptions.push(uncommentLogStatements);
 }
 exports.activate = activate;
 // this method is called when your extension is deactivated
