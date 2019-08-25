@@ -185,13 +185,19 @@ function activate(context:vscode.ExtensionContext) {
         let workSpaceEdit = new vscode.WorkspaceEdit();
         uncommentFoundStatements(workSpaceEdit, document.uri, logStatements);
     });
-
-    const addLogStatements = vscode.commands.registerCommand('extension.addLogStatements', async () => {
-        const editor = vscode.window.activeTextEditor;
-        if (!editor) {
-            return;
+    
+    const addLogStatements = vscode.commands.registerCommand('extension.addLogStatements', async (editorTest) => {
+        if(editorTest){
+            var selection = new vscode.Selection(new vscode.Position(0, 0), new vscode.Position(0, 22))
+            console.log(selection, "INI SELECTION KON TO L")
+            await consoleLogger(editorTest, selection)
+        } else {
+            const editor = vscode.window.activeTextEditor;
+            if (!editor) {
+                return;
+            }
+            await consoleLogger(editor, null);
         }
-        await consoleLogger(editor);
     });
 
     const installDependencies = vscode.commands.registerCommand('extension.installDependencies', async() => {

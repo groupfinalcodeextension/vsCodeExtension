@@ -1,11 +1,19 @@
 import * as vscode from "vscode";
-function consoleLogger(editor: vscode.TextEditor) {
+async function consoleLogger(editor: vscode.TextEditor, selection: vscode.Selection | null) {
     if (!editor) {
         return;
     }
     console.log("ASDASDASDASD");
-    const selection = editor.selection;
+    console.log(selection, "HELLOO?????")
+    if(!selection) {
+        selection = editor.selection;
+        console.log(selection, "ASDASDASDASDAS")
+    }
+    console.log(selection, "QWEQWEQWE")
     var text = editor.document.getText(selection);
+
+  
+    console.log(text, "INI <<<<<<<<<<<<<<<<<<<<<<<<<")
     const cursor = selection.start;
     const line = selection.active.line;
     const range = editor.document.getWordRangeAtPosition(cursor);
@@ -22,7 +30,7 @@ function consoleLogger(editor: vscode.TextEditor) {
     
     var lastLine = new vscode.Position(range.end.line+1, 0);
     var nextLine = editor.document.getWordRangeAtPosition(lastLine);
-
+    
     if(!nextLine) {
         editor.edit(edit =>{
             edit.insert(new vscode.Position(range.end.line+1, 0), `\nconsole.log(${text}, 'ini ${text}')`);
@@ -30,6 +38,7 @@ function consoleLogger(editor: vscode.TextEditor) {
             return;
         });
     }
+    console.log("HALOHALO")
     editor.edit(edit =>{
         edit.insert(new vscode.Position(range.end.line+1, 0), `console.log(${text}, 'ini ${text}') \n`);
     });

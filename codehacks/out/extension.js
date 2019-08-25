@@ -171,12 +171,19 @@ function activate(context) {
         let workSpaceEdit = new vscode.WorkspaceEdit();
         uncommentFoundStatements(workSpaceEdit, document.uri, logStatements);
     });
-    const addLogStatements = vscode.commands.registerCommand('extension.addLogStatements', () => __awaiter(this, void 0, void 0, function* () {
-        const editor = vscode.window.activeTextEditor;
-        if (!editor) {
-            return;
+    const addLogStatements = vscode.commands.registerCommand('extension.addLogStatements', (editorTest) => __awaiter(this, void 0, void 0, function* () {
+        if (editorTest) {
+            var selection = new vscode.Selection(new vscode.Position(0, 0), new vscode.Position(0, 22));
+            console.log(selection, "INI SELECTION KON TO L");
+            yield consoleLogger_1.default(editorTest, selection);
         }
-        yield consoleLogger_1.default(editor);
+        else {
+            const editor = vscode.window.activeTextEditor;
+            if (!editor) {
+                return;
+            }
+            yield consoleLogger_1.default(editor, null);
+        }
     }));
     const installDependencies = vscode.commands.registerCommand('extension.installDependencies', () => __awaiter(this, void 0, void 0, function* () {
         const editor = vscode.window.activeTextEditor;
