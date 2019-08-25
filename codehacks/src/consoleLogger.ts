@@ -3,17 +3,14 @@ async function consoleLogger(editor: vscode.TextEditor, selection: vscode.Select
     if (!editor) {
         return;
     }
-    console.log("ASDASDASDASD");
-    console.log(selection, "HELLOO?????")
+    
     if(!selection) {
         selection = editor.selection;
-        console.log(selection, "ASDASDASDASDAS")
+    
     }
-    console.log(selection, "QWEQWEQWE")
+    
     var text = editor.document.getText(selection);
 
-  
-    console.log(text, "INI <<<<<<<<<<<<<<<<<<<<<<<<<")
     const cursor = selection.start;
     const line = selection.active.line;
     const range = editor.document.getWordRangeAtPosition(cursor);
@@ -38,7 +35,7 @@ async function consoleLogger(editor: vscode.TextEditor, selection: vscode.Select
             return;
         });
     }
-    console.log("HALOHALO")
+   
     editor.edit(edit =>{
         edit.insert(new vscode.Position(range.end.line+1, 0), `console.log(${text}, 'ini ${text}') \n`);
     });
