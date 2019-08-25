@@ -21,7 +21,7 @@ suite('Extension Test Suite', () => {
     if (!pathName) {
         return;
     }
-    var file = path.join(pathName, "CodeHacksTesting.js");
+    var file = path.join(pathName, "CodeHacksTestingAddConsoleLog.js");
     mocha_1.before(() => {
         vscode.window.showInformationMessage('Start all tests.');
         fs.writeFileSync(file, "var tommy = 'very bad'");
@@ -32,11 +32,9 @@ suite('Extension Test Suite', () => {
     test('It should execute Add Log Statements command', () => __awaiter(this, void 0, void 0, function* () {
         const uri = vscode.Uri.file(file);
         const document = yield vscode.workspace.openTextDocument(uri);
-        console.log(document.getText(), "ASDASDASDASD TOMMY");
         yield setTimeout(() => __awaiter(this, void 0, void 0, function* () {
             vscode.commands.executeCommand("extension.addLogStatements", document);
         }), 1000);
-        console.log('goblok');
         assert.equal(-1, [1, 2, 3].indexOf(5));
         assert.equal(-1, [1, 2, 3].indexOf(0));
     }));

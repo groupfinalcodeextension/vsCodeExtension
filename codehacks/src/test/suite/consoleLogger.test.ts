@@ -21,8 +21,7 @@ suite('Extension Test Suite', () => {
 
 	after(() =>{
 		fs.unlinkSync(file)
-		console.log("ASD")
-		console.log("ASDWOWQEOQWIO")
+		
 	})
 
 	test('It should execute Add Log Statements command', async() => {
