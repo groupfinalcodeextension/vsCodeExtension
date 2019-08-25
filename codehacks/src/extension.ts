@@ -189,7 +189,6 @@ function activate(context:vscode.ExtensionContext) {
     const addLogStatements = vscode.commands.registerCommand('extension.addLogStatements', async (editorTest) => {
         if(editorTest){
             var selection = new vscode.Selection(new vscode.Position(0, 0), new vscode.Position(0, 22))
-            console.log(selection, "INI SELECTION KON TO L")
             await consoleLogger(editorTest, selection)
         } else {
             const editor = vscode.window.activeTextEditor;
