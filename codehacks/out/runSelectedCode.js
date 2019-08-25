@@ -21,7 +21,7 @@ function runSelectedCode(editor) {
     // console.log(fileName);
     let codeFile = join(dirname(fileName), 'tempFileCodeHacks.js');
     console.log(vscode.window.activeTerminal);
-    let terminal = null;
+    let terminal;
     if (vscode.window.activeTerminal) {
         terminal = vscode.window.activeTerminal;
     }

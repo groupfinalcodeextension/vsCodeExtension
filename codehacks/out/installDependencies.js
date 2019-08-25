@@ -23,11 +23,11 @@ function InstallDependencies(editor) {
             i = -1;
         }
     }
-    for (var i = 0; i < importStatements.length; i++) {
-        var regexx = /(\.)|(\/)/;
-        if (regexx.test(importStatements[i])) {
-            importStatements.splice(i, 1);
-            i = -1;
+    for (var j = 0; j < importStatements.length; j++) {
+        var regexxx = /(\.)|(\/)/;
+        if (regexxx.test(importStatements[j])) {
+            importStatements.splice(j, 1);
+            j = -1;
         }
     }
     console.log(importStatements);
@@ -45,7 +45,7 @@ function InstallDependencies(editor) {
         modulez.push(match3[0].replace(/[^a-zA-Z0-9\-@\/ ]/g, ""));
     }
     console.log(modulez);
-    var currentlyOpenTabfilePath = vscode.window.activeTextEditor.document.fileName;
+    var currentlyOpenTabfilePath = document.fileName;
     var temp = currentlyOpenTabfilePath.split("/");
     temp.splice(temp.length - 1, 1);
     var myPath = temp.join("/");

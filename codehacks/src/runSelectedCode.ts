@@ -1,8 +1,8 @@
-const vscode = require("vscode")
-const fs = require("fs")
-const {join, dirname} = require("path")
+import * as vscode from "vscode";
+const fs = require("fs");
+const {join, dirname} = require("path");
 
-function rangeBlock(editor) {
+function rangeBlock(editor: vscode.TextEditor) {
     if(!editor) {
         return ;
     }
@@ -13,7 +13,7 @@ function rangeBlock(editor) {
 }
 
 
-function runSelectedCode(editor) {
+function runSelectedCode(editor:vscode.TextEditor) {
     
     const document = editor.document;
     let selectedText = editor.document.getText(rangeBlock(editor));
@@ -25,7 +25,7 @@ function runSelectedCode(editor) {
     let codeFile = join(dirname(fileName), 'tempFileCodeHacks.js');
 
     console.log(vscode.window.activeTerminal);
-    let terminal = null;
+    let terminal:vscode.Terminal;
     if(vscode.window.activeTerminal) {
         terminal = vscode.window.activeTerminal;
     } else {
@@ -35,14 +35,14 @@ function runSelectedCode(editor) {
         });
     }
 
-    fs.writeFile(codeFile, selectedText, (err) =>{
+    fs.writeFile(codeFile, selectedText, (err:object) =>{
         if(err){
             console.log(err);
         }
         terminal.show();
         terminal.sendText(`node ${codeFile}`);
         setTimeout(() => {
-            fs.unlink(codeFile, (err) => {
+            fs.unlink(codeFile, (err:object) => {
                 if(err) {
                     console.log(err);
                 }

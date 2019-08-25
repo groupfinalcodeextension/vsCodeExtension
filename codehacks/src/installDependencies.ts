@@ -1,6 +1,6 @@
-const vscode = require("vscode")
+import * as vscode from "vscode";
 
-function InstallDependencies(editor) {
+function InstallDependencies(editor: vscode.TextEditor) {
         var documentText = editor.document.getText();
         var document = editor.document;
         var requireStatements = [];
@@ -9,7 +9,7 @@ function InstallDependencies(editor) {
         const requireRegex = /require\(.*?\)/g;
         var matchRequire;
         while (matchRequire = requireRegex.exec(documentText)) {
-            requireStatements.push(matchRequire[0])
+            requireStatements.push(matchRequire[0]);
         }
 
         const importRegex = /import .*?from (\'.*?\'|\".*?\")/g;
@@ -20,18 +20,18 @@ function InstallDependencies(editor) {
 
         
         for(var i = 0; i < requireStatements.length; i++) {
-            var regexx = /(\.)|(\/)/
+            var regexx = /(\.)|(\/)/;
             if(regexx.test(requireStatements[i])) {
-                requireStatements.splice(i, 1)
-                i = -1
+                requireStatements.splice(i, 1);
+                i = -1;
             }
         }
 
-        for(var i = 0; i < importStatements.length; i++) {
-            var regexx = /(\.)|(\/)/;
-            if(regexx.test(importStatements[i])) {
-                importStatements.splice(i, 1);
-                i = -1
+        for(var j = 0; j < importStatements.length; j++) {
+            var regexxx = /(\.)|(\/)/;
+            if(regexxx.test(importStatements[j])) {
+                importStatements.splice(j, 1);
+                j = -1;
             }
         }
         console.log(importStatements);
@@ -45,24 +45,24 @@ function InstallDependencies(editor) {
         }
 
         var importString = importStatements.join(" ");
-        console.log(importString)
+        console.log(importString);
         var match3;
         while(match3 = regex2.exec(importString)) {
             modulez.push(match3[0].replace(/[^a-zA-Z0-9\-@\/ ]/g, ""));
         }
    
-        console.log(modulez)
-        var currentlyOpenTabfilePath = vscode.window.activeTextEditor.document.fileName;
+        console.log(modulez);
+        var currentlyOpenTabfilePath = document.fileName;
 
         var temp = currentlyOpenTabfilePath.split("/");
-        temp.splice(temp.length-1, 1)
+        temp.splice(temp.length-1, 1);
         var myPath = temp.join("/");
 
-        var dependencies = modulez.join(" ")
+        var dependencies = modulez.join(" ");
 
         var terminal = null;
         if(vscode.window.activeTerminal){
-            terminal = vscode.window.activeTerminal
+            terminal = vscode.window.activeTerminal;
         } else {
             terminal = vscode.window.createTerminal({
                 name: "CodeHacks",
@@ -71,10 +71,10 @@ function InstallDependencies(editor) {
         }
         // console.log(dependencies)
         if(modulez.length > 0) {
-            terminal.show()
-            terminal.sendText(`cd ${myPath} && npm install ${dependencies}`)
+            terminal.show();
+            terminal.sendText(`cd ${myPath} && npm install ${dependencies}`);
         } else {
-            vscode.window.showInformationMessage("No dependencies found in current file")
+            vscode.window.showInformationMessage("No dependencies found in current file");
         }
 }
 

@@ -6,8 +6,8 @@ import * as vscode from "vscode";
 const { exec, execFile } = require("child_process");
 const path = require("path");
 import consoleLogger from "./consoleLogger";
-import InstallDependencies from "./installDependencies"
-import runSelectedCode from "./runSelectedCode"
+import InstallDependencies from "./installDependencies";
+import runSelectedCode from "./runSelectedCode";
 import { stringify } from "querystring";
 import { isWorker } from "cluster";
 // var consoleLogger = require("./consoleLogger")
@@ -149,7 +149,7 @@ function activate(context:vscode.ExtensionContext) {
     let disposable = vscode.commands.registerCommand('extension.helloWorld', () => {
         // The code you place here will be executed every time your command is executed
         // Display a message box to the user
-        console.log("ASDASDSDA")
+        console.log("ASDASDSDA");
         vscode.window.showInformationMessage('Hello Welcome to CodeHacks!!!!');
     });
     const deleteLogStatements = vscode.commands.registerCommand('extension.deleteAllLogStatements', () => {

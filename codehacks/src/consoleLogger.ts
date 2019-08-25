@@ -1,13 +1,13 @@
-const vscode = require("vscode");
-function consoleLogger(editor) {
-    if(!editor) {
+import * as vscode from "vscode";
+function consoleLogger(editor: vscode.TextEditor) {
+    if (!editor) {
         return;
     }
     console.log("ASDASDASDASD");
     const selection = editor.selection;
     var text = editor.document.getText(selection);
     const cursor = selection.start;
-    const line = selection.active.line
+    const line = selection.active.line;
     const range = editor.document.getWordRangeAtPosition(cursor);
     var regex = /(var|let|const)/;
     if(regex.test(text)) {
@@ -15,7 +15,7 @@ function consoleLogger(editor) {
         // console.log(temp)
         text = temp[1];
     }
-    if(!range) {
+    if (!range) {
         return;
     }
 
