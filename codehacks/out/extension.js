@@ -24,9 +24,12 @@ const { basename, dirname, extname, join } = require('path');
 // your extension is activated the very first time the command is executed
 function getAllLogStatements(document, documentText) {
     let logStatements = [];
+    // console.log(typeof documentText);
     const logRegex = /console.(log|debug|info|warn|error|assert|dir|dirxml|trace|group|groupEnd|time|timeEnd|profile|profileEnd|count)\((.*)\);?/g;
     let match;
     while (match = logRegex.exec(documentText)) {
+        // console.log(typeof document);
+        // console.log(typeof documentText);
         let matchRange = new vscode.Range(document.positionAt(match.index), document.positionAt(match.index + match[0].length));
         if (!matchRange.isEmpty) {
             logStatements.push(matchRange);
@@ -48,6 +51,7 @@ function getAllCommentLogStatements(document, documentText) {
 }
 function deleteFoundLogStatements(workspace, docUri, logs) {
     logs.forEach((log) => {
+        console.log(typeof log);
         workspace.delete(docUri, log);
     });
     vscode.workspace.applyEdit(workspace)
@@ -59,6 +63,9 @@ function deleteFoundLogStatements(workspace, docUri, logs) {
 }
 function commentFoundStatements(workspace, docUri, logs) {
     const editor = vscode.window.activeTextEditor;
+    if (!editor) {
+        return;
+    }
     logs.forEach((log) => {
         const documentText = editor.document.getText(log);
         // console.log(documentText)
@@ -73,6 +80,9 @@ function commentFoundStatements(workspace, docUri, logs) {
 }
 function uncommentFoundStatements(workspace, docUri, logs) {
     const editor = vscode.window.activeTextEditor;
+    if (!editor) {
+        return;
+    }
     logs.forEach((log) => {
         const documentText = editor.document.getText(log);
         let text = documentText.slice(2);

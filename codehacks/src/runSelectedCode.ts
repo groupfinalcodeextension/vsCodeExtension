@@ -52,4 +52,4 @@ function runSelectedCode(editor) {
     });
 }
 
-export default runSelectedCode
+export default runSelectedCode;

@@ -2,23 +2,28 @@ import { getVSCodeDownloadUrl } from "vscode-test/out/util";
 
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-const vscode = require("vscode");
+import * as vscode from "vscode";
 const { exec, execFile } = require("child_process");
 const path = require("path");
 import consoleLogger from "./consoleLogger";
 import InstallDependencies from "./installDependencies"
 import runSelectedCode from "./runSelectedCode"
+import { stringify } from "querystring";
+import { isWorker } from "cluster";
 // var consoleLogger = require("./consoleLogger")
 const fs = require('fs');
 const { basename, dirname, extname, join } = require('path');
 // import rangeBlock from '../src/codeRunner';
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
-function getAllLogStatements(document, documentText) {
+function getAllLogStatements(document:vscode.TextDocument, documentText:string) {
     let logStatements = [];
+    // console.log(typeof documentText);
     const logRegex = /console.(log|debug|info|warn|error|assert|dir|dirxml|trace|group|groupEnd|time|timeEnd|profile|profileEnd|count)\((.*)\);?/g;
     let match;
     while (match = logRegex.exec(documentText)) {
+        // console.log(typeof document);
+        // console.log(typeof documentText);
         let matchRange = new vscode.Range(document.positionAt(match.index), document.positionAt(match.index + match[0].length));
         if (!matchRange.isEmpty) {
             logStatements.push(matchRange);
@@ -27,7 +32,7 @@ function getAllLogStatements(document, documentText) {
     return logStatements;
 }
 
-function getAllCommentLogStatements(document, documentText) {
+function getAllCommentLogStatements(document : vscode.TextDocument, documentText : string) {
     let logStatements = [];
     const logRegex = /[/][/]console|[/][/] console.(log|debug|info|warn|error|assert|dir|dirxml|trace|group|groupEnd|time|timeEnd|profile|profileEnd|count)\((.*)\);?/g;
     let match;
@@ -40,8 +45,9 @@ function getAllCommentLogStatements(document, documentText) {
     return logStatements;
 }
 
-function deleteFoundLogStatements(workspace, docUri, logs) {
+function deleteFoundLogStatements(workspace: vscode.WorkspaceEdit, docUri:vscode.Uri, logs:Array<vscode.Range>) {
     logs.forEach((log) => {
+        console.log(typeof log);
         workspace.delete(docUri, log);
     });
     vscode.workspace.applyEdit(workspace)
@@ -51,8 +57,12 @@ function deleteFoundLogStatements(workspace, docUri, logs) {
             }
         });
 }
-function commentFoundStatements(workspace, docUri, logs) {
+
+function commentFoundStatements(workspace :vscode.WorkspaceEdit, docUri:vscode.Uri, logs:Array<vscode.Range>) {
     const editor = vscode.window.activeTextEditor;
+        if(!editor) {
+            return ;
+        }
 
     logs.forEach((log) => {
         const documentText = editor.document.getText(log);
@@ -67,8 +77,13 @@ function commentFoundStatements(workspace, docUri, logs) {
             }
         });
 }
-function uncommentFoundStatements(workspace, docUri, logs) {
+
+function uncommentFoundStatements(workspace : vscode.WorkspaceEdit, docUri:vscode.Uri, logs:Array<vscode.Range>) {
     const editor = vscode.window.activeTextEditor;
+
+    if(!editor) {
+        return ;
+    }
 
     logs.forEach((log) => {
         const documentText = editor.document.getText(log);
@@ -124,7 +139,7 @@ function deleteFile(file: String) {
 }
 
 
-function activate(context) {
+function activate(context:vscode.ExtensionContext) {
     // Use the console to output diagnostic information (console.log) and errors (console.error)
     // This line of code will only be executed once when your extension is activated
     console.log('Congratulations, your extension "helloworld" is now active!');
@@ -192,7 +207,7 @@ function activate(context) {
         if (!editor) {
             return;
         }
-       await runSelectedCode(editor)
+       await runSelectedCode(editor);
     });
     context.subscriptions.push(disposable);
     context.subscriptions.push(runCodeByBlock);

@@ -60,14 +60,14 @@ function InstallDependencies(editor) {
 
         var dependencies = modulez.join(" ")
 
-        var terminal = null
+        var terminal = null;
         if(vscode.window.activeTerminal){
             terminal = vscode.window.activeTerminal
         } else {
             terminal = vscode.window.createTerminal({
                 name: "CodeHacks",
                 hideFromUser: false
-            })
+            });
         }
         // console.log(dependencies)
         if(modulez.length > 0) {
@@ -78,4 +78,4 @@ function InstallDependencies(editor) {
         }
 }
 
-export default InstallDependencies
+export default InstallDependencies;
