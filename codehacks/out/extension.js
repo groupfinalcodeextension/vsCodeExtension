@@ -174,7 +174,6 @@ function activate(context) {
     const addLogStatements = vscode.commands.registerCommand('extension.addLogStatements', (editorTest) => __awaiter(this, void 0, void 0, function* () {
         if (editorTest) {
             var selection = new vscode.Selection(new vscode.Position(0, 0), new vscode.Position(0, 22));
-            console.log(selection, "INI SELECTION KON TO L");
             yield consoleLogger_1.default(editorTest, selection);
         }
         else {
