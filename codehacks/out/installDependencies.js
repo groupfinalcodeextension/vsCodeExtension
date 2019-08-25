@@ -45,7 +45,7 @@ function InstallDependencies(editor) {
         modulez.push(match3[0].replace(/[^a-zA-Z0-9\-@\/ ]/g, ""));
     }
     console.log(modulez);
-    var currentlyOpenTabfilePath = vscode.window.activeTextEditor.document.fileName;
+    var currentlyOpenTabfilePath = document.fileName;
     var temp = currentlyOpenTabfilePath.split("/");
     temp.splice(temp.length - 1, 1);
     var myPath = temp.join("/");

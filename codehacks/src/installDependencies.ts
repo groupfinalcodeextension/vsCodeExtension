@@ -1,6 +1,6 @@
-const vscode = require("vscode")
+import * as vscode from "vscode"
 
-function InstallDependencies(editor) {
+function InstallDependencies(editor: vscode.TextEditor) {
         var documentText = editor.document.getText();
         var document = editor.document;
         var requireStatements = [];
@@ -52,7 +52,7 @@ function InstallDependencies(editor) {
         }
    
         console.log(modulez)
-        var currentlyOpenTabfilePath = vscode.window.activeTextEditor.document.fileName;
+        var currentlyOpenTabfilePath = document.fileName;
 
         var temp = currentlyOpenTabfilePath.split("/");
         temp.splice(temp.length-1, 1)

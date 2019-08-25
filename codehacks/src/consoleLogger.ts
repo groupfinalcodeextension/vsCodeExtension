@@ -1,6 +1,6 @@
-const vscode = require("vscode")
-function consoleLogger(editor) {
-    if(!editor) {
+import * as vscode from "vscode"
+function consoleLogger(editor: vscode.TextEditor) {
+    if (!editor) {
         return;
     }
     console.log("ASDASDASDASD")
@@ -10,28 +10,28 @@ function consoleLogger(editor) {
     const line = selection.active.line
     const range = editor.document.getWordRangeAtPosition(cursor);
     var regex = /(var|let|const)/
-    if(regex.test(text)) {
+    if (regex.test(text)) {
         var temp = text.split(" ")
         // console.log(temp)
         text = temp[1]
     }
-    if(!range) {
+    if (!range) {
         return;
     }
 
-    
-    var lastLine = new vscode.Position(range.end.line+1, 0)
+
+    var lastLine = new vscode.Position(range.end.line + 1, 0)
     var nextLine = editor.document.getWordRangeAtPosition(lastLine)
 
-    if(!nextLine) {
-        editor.edit(edit =>{
-            edit.insert(new vscode.Position(range.end.line+1, 0), `\nconsole.log(${text}, 'ini ${text}')`)
-        }).then(() =>{
+    if (!nextLine) {
+        editor.edit(edit => {
+            edit.insert(new vscode.Position(range.end.line + 1, 0), `\nconsole.log(${text}, 'ini ${text}')`)
+        }).then(() => {
             return;
         })
     }
-    editor.edit(edit =>{
-        edit.insert(new vscode.Position(range.end.line+1, 0), `console.log(${text}, 'ini ${text}') \n`)
+    editor.edit(edit => {
+        edit.insert(new vscode.Position(range.end.line + 1, 0), `console.log(${text}, 'ini ${text}') \n`)
     })
 }
 
