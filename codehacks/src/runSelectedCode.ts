@@ -8,12 +8,12 @@ function rangeBlock(editor: vscode.TextEditor) {
     }
     const selection = editor.selection;
     const range = new vscode.Range(selection.start,selection.end);
-    console.log(range);
+    console.log(range,"disinii ni");
     return range;
 }
 
 
-function runSelectedCode(editor:vscode.TextEditor) {
+function runSelectedCode(editor:vscode.TextEditor,selection:vscode.Selection) {
     
     const document = editor.document;
     let selectedText = editor.document.getText(rangeBlock(editor));
@@ -24,7 +24,7 @@ function runSelectedCode(editor:vscode.TextEditor) {
     // console.log(fileName);
     let codeFile = join(dirname(fileName), 'tempFileCodeHacks.js');
 
-    console.log(vscode.window.activeTerminal);
+    console.log(vscode.window.activeTerminal, "disini ni");
     let terminal:vscode.Terminal;
     if(vscode.window.activeTerminal) {
         terminal = vscode.window.activeTerminal;

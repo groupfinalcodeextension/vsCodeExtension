@@ -260,9 +260,12 @@ function activate(context) {
             yield uncommentFoundStatements(workSpaceEdit, document.uri, logStatements, document);
         }
     }));
-    const addLogStatements = vscode.commands.registerCommand('extension.addLogStatements', (editorTest) => __awaiter(this, void 0, void 0, function* () {
-        if (editorTest) {
+    const addLogStatements = vscode.commands.registerCommand('extension.addLogStatements', (uri) => __awaiter(this, void 0, void 0, function* () {
+        if (uri) {
             var selection = new vscode.Selection(new vscode.Position(0, 0), new vscode.Position(0, 22));
+            var document = yield vscode.workspace.openTextDocument(uri);
+            // console.log(editorTest.getText(), "GELLOLOLO")
+            var editorTest = yield vscode.window.showTextDocument(document);
             yield consoleLogger_1.default(editorTest, selection);
         }
         else {
@@ -270,7 +273,8 @@ function activate(context) {
             if (!editor) {
                 return;
             }
-            yield consoleLogger_1.default(editor, null);
+            const selection = editor.selection;
+            yield consoleLogger_1.default(editor, selection);
         }
     }));
     const installDependencies = vscode.commands.registerCommand('extension.installDependencies', () => __awaiter(this, void 0, void 0, function* () {
@@ -280,13 +284,28 @@ function activate(context) {
         }
         yield installDependencies_1.default(editor);
     }));
-    const runCodeByBlock = vscode.commands.registerCommand('extension.runCode', () => __awaiter(this, void 0, void 0, function* () {
-        const editor = vscode.window.activeTextEditor;
-        if (!editor) {
-            return;
+    const runCodeByBlock = vscode.commands.registerCommand('extension.runCode', (uri) => __awaiter(this, void 0, void 0, function* () {
+        if (uri) {
+            var selection = new vscode.Selection(new vscode.Position(0, 0), new vscode.Position(0, 22));
+            var document = yield vscode.workspace.openTextDocument(uri);
+            var editor = yield vscode.window.showTextDocument(document);
+            yield runSelectedCode_1.default(editor, selection);
         }
-        yield runSelectedCode_1.default(editor);
+        else {
+            const editor = vscode.window.activeTextEditor;
+            if (!editor) {
+                return;
+            }
+            const selection = editor.selection;
+            yield runSelectedCode_1.default(editor, selection);
+        }
     }));
+    // const makeComponent = vscode.commands.registerCommand('extension.makeComponent', async() =>{
+    //     var input = await vscode.window.showInputBox({
+    //         prompt: "Label: ",
+    //         placeHolder: "(placeholder)"
+    //     })
+    // })
     context.subscriptions.push(disposable);
     context.subscriptions.push(runCodeByBlock);
     context.subscriptions.push(installDependencies);

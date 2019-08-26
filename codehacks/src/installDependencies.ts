@@ -20,7 +20,7 @@ function InstallDependencies(editor: vscode.TextEditor) {
 
         
         for(var i = 0; i < requireStatements.length; i++) {
-            var regexx = /(\.)|(\/)/;
+            var regexx = /(\.)|(\.\.)/;
             if(regexx.test(requireStatements[i])) {
                 requireStatements.splice(i, 1);
                 i = -1;
@@ -28,7 +28,7 @@ function InstallDependencies(editor: vscode.TextEditor) {
         }
 
         for(var j = 0; j < importStatements.length; j++) {
-            var regexxx = /(\.)|(\/)/;
+            var regexxx = /(\.)|(\.\.)/;
             if(regexxx.test(importStatements[j])) {
                 importStatements.splice(j, 1);
                 j = -1;
@@ -73,6 +73,9 @@ function InstallDependencies(editor: vscode.TextEditor) {
         if(modulez.length > 0) {
             terminal.show();
             terminal.sendText(`cd ${myPath} && npm install ${dependencies}`);
+            vscode.window.onDidChangeActiveTerminal(() =>{
+                console.log("HALOHALO")
+            })
         } else {
             vscode.window.showInformationMessage("No dependencies found in current file");
         }

@@ -49,6 +49,38 @@
 				"command": "extension.uncommentAllLogStatements",
 				"title": "Uncomment Log"
 			}
+		],
+		"keybindings": [
+			{
+				"command": "extension.deleteAllLogStatements",
+				"mac": "shift+cmd+i",
+				"key": "ctrl+alt+i"
+			},
+			{
+				"command": "extension.commentAllLogStatements",
+				"mac": "shift+cmd+0",
+				"key": "ctrl+alt+0"
+			},
+			{
+				"command": "extension.uncommentAllLogStatements",
+				"mac": "shift+cmd+9",
+				"key": "ctrl+alt+9"
+			},
+			{
+				"command": "extension.installDependencies",
+				"mac": "shift+cmd+8",
+				"key": "ctrl+alt+8"
+			},
+			{
+				"command": "extension.runCode",
+				"mac": "shift+cmd+7",
+				"key": "ctrl+alt+7"
+			},
+			{
+				"command": "extension.addLogStatements",
+				"mac": "shift+cmd+a",
+				"key": "ctrl+alt+a"
+			}
 		]
 	},
 	"scripts": {

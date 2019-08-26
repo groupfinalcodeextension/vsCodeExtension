@@ -12,10 +12,8 @@ const vscode = require("vscode");
 function consoleLogger(editor, selection) {
     return __awaiter(this, void 0, void 0, function* () {
         if (!editor) {
+            console.log("NGA AD EDITOR");
             return;
-        }
-        if (!selection) {
-            selection = editor.selection;
         }
         var text = editor.document.getText(selection);
         const cursor = selection.start;
@@ -24,7 +22,6 @@ function consoleLogger(editor, selection) {
         var regex = /(var|let|const)/;
         if (regex.test(text)) {
             var temp = text.split(" ");
-            // console.log(temp)
             text = temp[1];
         }
         if (!range) {

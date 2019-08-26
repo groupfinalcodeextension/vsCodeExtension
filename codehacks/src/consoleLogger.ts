@@ -1,23 +1,18 @@
 import * as vscode from "vscode";
-async function consoleLogger(editor: vscode.TextEditor, selection: vscode.Selection | null) {
+async function consoleLogger(editor: vscode.TextEditor, selection: vscode.Selection) {
     if (!editor) {
+        console.log("NGA AD EDITOR")
         return;
     }
     
-    if(!selection) {
-        selection = editor.selection;
-    
-    }
-    
     var text = editor.document.getText(selection);
-
+   
     const cursor = selection.start;
     const line = selection.active.line;
     const range = editor.document.getWordRangeAtPosition(cursor);
     var regex = /(var|let|const)/;
     if(regex.test(text)) {
         var temp = text.split(" ");
-        // console.log(temp)
         text = temp[1];
     }
     if (!range) {
