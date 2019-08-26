@@ -16,6 +16,7 @@ const path = require("path");
 const consoleLogger_1 = require("./consoleLogger");
 const installDependencies_1 = require("./installDependencies");
 const runSelectedCode_1 = require("./runSelectedCode");
+const makeComponent_1 = require("./makeComponent");
 // var consoleLogger = require("./consoleLogger")
 const fs = require('fs');
 const { basename, dirname, extname, join } = require('path');
@@ -202,6 +203,17 @@ function activate(context) {
         }
         yield runSelectedCode_1.default(editor);
     }));
+    const MakeComponent = vscode.commands.registerCommand('extension.makeComponent', () => __awaiter(this, void 0, void 0, function* () {
+        var input = yield vscode.window.showInputBox({
+            prompt: "Component Name: ",
+            placeHolder: "Input your component name here.."
+        });
+        var editor = vscode.window.activeTextEditor;
+        if (!editor || !input) {
+            return;
+        }
+        yield makeComponent_1.default(editor, input);
+    }));
     context.subscriptions.push(disposable);
     context.subscriptions.push(runCodeByBlock);
     context.subscriptions.push(installDependencies);
@@ -209,6 +221,7 @@ function activate(context) {
     context.subscriptions.push(addLogStatements);
     context.subscriptions.push(commentLogStatements);
     context.subscriptions.push(uncommentLogStatements);
+    context.subscriptions.push(MakeComponent);
 }
 exports.activate = activate;
 // this method is called when your extension is deactivated

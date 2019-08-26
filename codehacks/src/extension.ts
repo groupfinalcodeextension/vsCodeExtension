@@ -8,6 +8,7 @@ const path = require("path");
 import consoleLogger from "./consoleLogger";
 import InstallDependencies from "./installDependencies";
 import runSelectedCode from "./runSelectedCode";
+import makeComponent from "./makeComponent"
 import { stringify } from "querystring";
 import { isWorker } from "cluster";
 // var consoleLogger = require("./consoleLogger")
@@ -143,6 +144,7 @@ function activate(context:vscode.ExtensionContext) {
     // Use the console to output diagnostic information (console.log) and errors (console.error)
     // This line of code will only be executed once when your extension is activated
     console.log('Congratulations, your extension "helloworld" is now active!');
+
     // The command has been defined in the package.json file
     // Now provide the implementation of the command with registerCommand
     // The commandId parameter must match the command field in package.json
@@ -219,12 +221,21 @@ function activate(context:vscode.ExtensionContext) {
        await runSelectedCode(editor);
     });
 
-    // const makeComponent = vscode.commands.registerCommand('extension.makeComponent', async() =>{
-    //     var input = await vscode.window.showInputBox({
-    //         prompt: "Label: ",
-    //         placeHolder: "(placeholder)"
-    //     })
-    // })
+    const MakeComponent = vscode.commands.registerCommand('extension.makeComponent', async() =>{
+        
+        var input = await vscode.window.showInputBox({
+            prompt: "Component Name: ",
+            placeHolder: "Input your component name here.."
+        })
+
+        var editor = vscode.window.activeTextEditor;
+        if(!editor || !input) {
+            return;
+        }
+        await makeComponent(editor, input)
+    })
+
+    
 
     context.subscriptions.push(disposable);
     context.subscriptions.push(runCodeByBlock);
@@ -233,6 +244,7 @@ function activate(context:vscode.ExtensionContext) {
     context.subscriptions.push(addLogStatements);
     context.subscriptions.push(commentLogStatements);
     context.subscriptions.push(uncommentLogStatements);
+    context.subscriptions.push(MakeComponent);
 }
 exports.activate = activate;
 // this method is called when your extension is deactivated
