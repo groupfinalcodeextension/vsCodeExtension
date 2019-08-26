@@ -18,7 +18,7 @@ async function makeComponent(editor: vscode.TextEditor, input: string) {
     while (match = logRegex.exec(documentText)) {
         let matchRange = new vscode.Range(document.positionAt(match.index), document.positionAt(match.index + match[0].length));
         if (!matchRange.isEmpty) {
-            importStatements.push(document.getText(matchRange));
+            importStatements.push(matchRange);
         }
     }
     if(importStatements.length === 0) {
