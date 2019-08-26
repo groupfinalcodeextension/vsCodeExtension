@@ -16,7 +16,8 @@
 		"onCommand:extension.addLogStatements",
 		"onCommand:extension.installDependencies",
 		"onCommand:extension.commentAllLogStatements",
-		"onCommand:extension.uncommentAllLogStatements"
+		"onCommand:extension.uncommentAllLogStatements",
+		"onCommand:extension.makeComponent"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -48,6 +49,10 @@
 			{
 				"command": "extension.uncommentAllLogStatements",
 				"title": "Uncomment Log"
+			},
+			{
+				"command": "extension.makeComponent",
+				"title": "Make Component"
 			}
 		],
 		"keybindings": [
