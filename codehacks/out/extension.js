@@ -171,9 +171,12 @@ function activate(context) {
         let workSpaceEdit = new vscode.WorkspaceEdit();
         uncommentFoundStatements(workSpaceEdit, document.uri, logStatements);
     });
-    const addLogStatements = vscode.commands.registerCommand('extension.addLogStatements', (editorTest) => __awaiter(this, void 0, void 0, function* () {
-        if (editorTest) {
+    const addLogStatements = vscode.commands.registerCommand('extension.addLogStatements', (uri) => __awaiter(this, void 0, void 0, function* () {
+        if (uri) {
             var selection = new vscode.Selection(new vscode.Position(0, 0), new vscode.Position(0, 22));
+            var document = yield vscode.workspace.openTextDocument(uri);
+            // console.log(editorTest.getText(), "GELLOLOLO")
+            var editorTest = yield vscode.window.showTextDocument(document);
             yield consoleLogger_1.default(editorTest, selection);
         }
         else {
@@ -181,7 +184,8 @@ function activate(context) {
             if (!editor) {
                 return;
             }
-            yield consoleLogger_1.default(editor, null);
+            const selection = editor.selection;
+            yield consoleLogger_1.default(editor, selection);
         }
     }));
     const installDependencies = vscode.commands.registerCommand('extension.installDependencies', () => __awaiter(this, void 0, void 0, function* () {

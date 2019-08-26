@@ -21,17 +21,14 @@ suite('Extension Test Suite', () => {
 
 	after(() =>{
 		fs.unlinkSync(file)
-		
 	})
 
 	test('It should execute Add Log Statements command', async() => {
 		const uri = vscode.Uri.file(file);
 		const document = await vscode.workspace.openTextDocument(uri);
 		
-		await setTimeout(async()=>{
-			vscode.commands.executeCommand("extension.addLogStatements", document);
-		}, 1000)
-
+		await vscode.commands.executeCommand("extension.addLogStatements", uri);
+		
 		assert.equal(-1, [1, 2, 3].indexOf(5));
 		assert.equal(-1, [1, 2, 3].indexOf(0));
 	});

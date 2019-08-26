@@ -27,16 +27,12 @@ suite('Extension Test Suite', () => {
         fs.writeFileSync(file, "var tommy = 'very bad'");
     });
     mocha_1.after(() => {
-        fs.unlinkSync(file);
-        console.log("ASD");
-        console.log("ASDWOWQEOQWIO");
+        fs.unlinkSync(file)
     });
     test('It should execute Add Log Statements command', () => __awaiter(this, void 0, void 0, function* () {
         const uri = vscode.Uri.file(file);
         const document = yield vscode.workspace.openTextDocument(uri);
-        yield setTimeout(() => __awaiter(this, void 0, void 0, function* () {
-            vscode.commands.executeCommand("extension.addLogStatements", document);
-        }), 1000);
+        yield vscode.commands.executeCommand("extension.addLogStatements", uri);
         assert.equal(-1, [1, 2, 3].indexOf(5));
         assert.equal(-1, [1, 2, 3].indexOf(0));
     }));

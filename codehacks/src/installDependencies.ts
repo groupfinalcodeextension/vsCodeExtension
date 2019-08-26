@@ -73,6 +73,9 @@ function InstallDependencies(editor: vscode.TextEditor) {
         if(modulez.length > 0) {
             terminal.show();
             terminal.sendText(`cd ${myPath} && npm install ${dependencies}`);
+            vscode.window.onDidChangeActiveTerminal(() =>{
+                console.log("HALOHALO")
+            })
         } else {
             vscode.window.showInformationMessage("No dependencies found in current file");
         }
