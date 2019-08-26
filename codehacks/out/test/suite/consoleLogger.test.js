@@ -27,7 +27,7 @@ suite('Extension Test Suite', () => {
         fs.writeFileSync(file, "var tommy = 'very bad'");
     });
     mocha_1.after(() => {
-        fs.unlinkSync(file)
+        fs.unlinkSync(file);
     });
     test('It should execute Add Log Statements command', () => __awaiter(this, void 0, void 0, function* () {
         const uri = vscode.Uri.file(file);
