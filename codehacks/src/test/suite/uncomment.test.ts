@@ -27,11 +27,7 @@ suite('Extension Test Suite', () => {
 
 	test('It should execute uncomment log Statements command', async() => {
 		const uri = vscode.Uri.file(file);
-		const document = await vscode.workspace.openTextDocument(uri);
-		
-		await setTimeout(async()=>{
-			vscode.commands.executeCommand("extension.uncommentAllLogStatements", document);
-		}, 1000);
+		await vscode.commands.executeCommand("extension.uncommentAllLogStatements", uri);
 
 		assert.equal(-1, [1, 2, 3].indexOf(5));
 		assert.equal(-1, [1, 2, 3].indexOf(0));

@@ -28,15 +28,15 @@ suite('Extension Test Suite', () => {
     });
     mocha_1.after(() => {
         fs.unlinkSync(file);
-        console.log("ASD");
-        console.log("ASDWOWQEOQWIO");
+        // console.log("ASD");
+        // console.log("ASDWOWQEOQWIO");
     });
     test('It should execute comment log Statements command', () => __awaiter(this, void 0, void 0, function* () {
         const uri = vscode.Uri.file(file);
-        const document = yield vscode.workspace.openTextDocument(uri);
-        yield setTimeout(() => __awaiter(this, void 0, void 0, function* () {
-            vscode.commands.executeCommand("extension.commentAllLogStatements", document);
-        }), 1000);
+        // const document = await vscode.workspace.openTextDocument(uri);
+        // const documentText =  document.getText();
+        // console.log(documentText)
+        yield vscode.commands.executeCommand("extension.commentAllLogStatements", uri);
         assert.equal(-1, [1, 2, 3].indexOf(5));
         assert.equal(-1, [1, 2, 3].indexOf(0));
     }));

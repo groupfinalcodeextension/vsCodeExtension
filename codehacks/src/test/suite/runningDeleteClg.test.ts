@@ -9,29 +9,25 @@ import * as vscode from 'vscode';
 // import * as myExtension from '../extension';
 
 suite('Extension Test Suite', () => {
-	var pathName: string | undefined = vscode.workspace.rootPath;
-	if (!pathName) {
+	var pathName : string | undefined = vscode.workspace.rootPath;
+	if(!pathName){
 		return;
 	}
-	var file = path.join(pathName, "CodeHacksTestingCommentConsoleLog.js")
+	var file = path.join(pathName, "CodeHacksTestingDeleteConsoleLog.js")
 	before(() => {
 		vscode.window.showInformationMessage('Start all tests.');
 		fs.writeFileSync(file, "console.log('rezabasuki')");
 	});
 
-	after(() => {
+	after(() =>{
 		fs.unlinkSync(file);
-		// console.log("ASD");
-		// console.log("ASDWOWQEOQWIO");
+		console.log("ASD");
+		console.log("ASDWOWQEOQWIO");
 	});
 
-	test('It should execute comment log Statements command', async () => {
+	test('It should execute delete log Statements command', async() => {
 		const uri = vscode.Uri.file(file);
-		// const document = await vscode.workspace.openTextDocument(uri);
-		// const documentText =  document.getText();
-		// console.log(documentText)
-
-		await vscode.commands.executeCommand("extension.commentAllLogStatements", uri);
+		await vscode.commands.executeCommand("extension.deleteAllLogStatements", uri);
 
 		assert.equal(-1, [1, 2, 3].indexOf(5));
 		assert.equal(-1, [1, 2, 3].indexOf(0));
