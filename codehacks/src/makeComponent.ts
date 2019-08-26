@@ -13,15 +13,17 @@ async function makeComponent(editor: vscode.TextEditor, input: string) {
     var importStatements = [];
     
     // INSERT IMPORT STATEMENT
-    var logRegex = /import.*?from ".*?"/g;
+    var logRegex = /import .*?from (\'.*?\'|\".*?\")/g;
     var match;
     while (match = logRegex.exec(documentText)) {
         let matchRange = new vscode.Range(document.positionAt(match.index), document.positionAt(match.index + match[0].length));
         if (!matchRange.isEmpty) {
-            importStatements.push(matchRange);
+            importStatements.push(document.getText(matchRange));
         }
     }
-
+    if(importStatements.length === 0) {
+        return;
+    }
     var lastLine = importStatements[importStatements.length - 1];
     editor.edit(edit =>{
         edit.insert(lastLine.end, `\nimport ${input} from "./${input}"`);
