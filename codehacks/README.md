@@ -1,20 +1,61 @@
-# codehacks README
+# Code Hacks
 
-This is the README for your extension "codehacks". After writing up a brief description, we recommend including the following sections.
+[![Generic badge](https://img.shields.io/badge/build-passing-<COLOR>.svg)](https://shields.io/)
+
+## Intro
+
+This extension will help you clean your `JavaScript` code from dummy console.log, creating you a console.log by blocking the lines, run a function, installing dependencies just by require/import it on your code etc.
+
+Here is the direct link to our website 
+And Here is the direct link to marketplace
+
+## Instalation
+Install Through VS Code Extensions. Search for `Code Hacks`
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+<ul>
+  <li>Delete dummy console.log to clean your code</li>
+  <li>Generate a console.log on your code by blocking the lines</li>
+  <li>Installing dependencies just by require/import it on your code</li>
+  <li>Runing a selected function just by block it</li>
+  <li>Comment all console.log</li>
+  <li>Uncomment all console.log</li>
+</ul>
 
-For example if there is an image subfolder under your extension project workspace:
+## Usage
 
-\!\[feature X\]\(images/feature-x.png\)
+### Delete Log
+  <ul>
+    <li>Use shortcut CTRL + SHIFT + P</li> 
+    <li>Then input Delete log and press enter or click on the suggestion</li>
+  </ul>
+  <img src="assets/DeleteLog.gif" width="800" >
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+### Run a code
+  <ul>
+    <li>Block/Highlight the code/function that you wants to run</li>
+    <li>Use shortcut CTRL + SHIFT + P</li> 
+    <li>Then input Run Code Hacks and press enter or click on the suggestion</li>
+  </ul>
 
-## Requirements
+  <img src="assets/runCode.gif" width="800" >
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+### Install Dependencies
+  <ul>  
+    <li>Use shortcut CTRL + SHIFT + P</li> 
+    <li>Then input Install Dependencies and press enter or click on the suggestion</li>
+  </ul>
+
+  <img src="assets/installDependencies.gif" width="800" >
+
+### Comment Log & Uncomment Log
+  <ul>  
+    <li>Use shortcut CTRL + SHIFT + P</li> 
+    <li>Then input Comment Log to comment log or input Uncomment Log to uncomment all log and press enter or click on the suggestion</li>
+  </ul>
+
+  <img src="assets/commentUncomment.gif" width="800" >
 
 ## Extension Settings
 
