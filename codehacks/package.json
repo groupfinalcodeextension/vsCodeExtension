@@ -85,6 +85,11 @@
 				"command": "extension.addLogStatements",
 				"mac": "shift+cmd+a",
 				"key": "ctrl+alt+a"
+			},
+			{
+				"command": "extension.makeComponent",
+				"mac": "shift+cmd+'",
+				"key": "ctrl+alt+'"
 			}
 		]
 	},
