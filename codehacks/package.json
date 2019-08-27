@@ -14,6 +14,11 @@
 	"categories": [
 		"Other"
 	],
+	"icon": "assets/logo2.jpg",
+  "galleryBanner": {
+    "color": "#34495e",
+    "theme": "dark"
+  },
 	"activationEvents": [
 		"onCommand:extension.runCode",
 		"onCommand:extension.helloWorld",
@@ -100,6 +105,11 @@
 				"command": "extension.makeComponentReact",
 				"mac": "shift+cmd+'",
 				"key": "ctrl+alt+'"
+			},
+			{
+				"command": "extension.makeComponentVue",
+				"mac": "shift+cmd+v",
+				"key": "ctrl+alt+v"
 			}
 		]
 	},

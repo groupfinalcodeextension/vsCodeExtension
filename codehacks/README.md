@@ -4,9 +4,9 @@
 
 ## Intro
 
-This extension will help you clean your `JavaScript` code from dummy log, creating you a log by blocking the lines, run a function, installing dependencies just by require/import it on your code etc.
+Codehacks is a VS Code Extension that converts what may have otherwise be a boring or tedious task for most developers into simple commands. With Codehacks you can   automatically install required/imported dependencies in a file, split React/Vue components into separate files, run highlighted code/functions, and use shortcuts/snippets to console.log a variable, comment/uncomment/delete console.logs.
 
-Here is the direct link to our website 
+Here is the direct link to our website <br>
 And Here is the direct link to marketplace
 
 ## Instalation
@@ -36,17 +36,34 @@ Install Through VS Code Extensions. Search for `Code Hacks`
   <img src="assets/installDependencies.gif" width="800" >
 
 <br>
+<br>
 
-### Make Component
+### Make Component React
   <ul>
     <li>Block/Highlight the code that you want change to be component</li>  
     <li>Use shortcut CTRL + SHIFT + P</li> 
     <li>Then input Make Component and press enter or click on the suggestion</li>
+    <li>Input the component name then press enter</li>
     <li>Or you can just use shortcut CTRL + ALT + '</li>
   </ul>
 
-  <img src="assets/makeComponent.gif" width="800" >
+  <img src="assets/makeComponentReact.gif" width="800" >
 
+<br>
+<br>
+
+### Make Component Vue
+  <ul>
+    <li>Block/Highlight the code that you want change to be component</li>  
+    <li>Use shortcut CTRL + SHIFT + P</li> 
+    <li>Then input Make Component and press enter or click on the suggestion</li>
+    <li>Input the component name then press enter</li>
+    <li>Or you can just use shortcut CTRL + ALT + V</li>
+  </ul>
+
+  <img src="assets/makeComponentVue.gif" width="800" >
+
+<br>
 <br>
 
 ### Delete Log
@@ -61,13 +78,14 @@ Install Through VS Code Extensions. Search for `Code Hacks`
   <ul>
     <li>Block/Highlight the code/function that you wants to run</li>
     <li>Use shortcut CTRL + SHIFT + P</li> 
-    <li>Then input Run Code Hacks and press enter or click on the suggestion</li>
+    <li>Then input Run Code Hacks and press enter or click on the suggestion</li>    
     <li>Or you can just use shortcut CTRL + ALT + 7</li>
   </ul>
 
   <img src="assets/runCode.gif" width="800" >
   
-  <br>
+<br>
+<br>
 
 ### Comment Log & Uncomment Log
   <ul>  
