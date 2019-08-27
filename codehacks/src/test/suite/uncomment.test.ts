@@ -13,7 +13,7 @@ suite('Extension Test Suite', () => {
 	if(!pathName){
 		return;
 	}
-	var file = path.join(pathName, "CodeHacksTestingUncommentConsoleLog.js")
+	var file = path.join(pathName, "CodeHacksTestingUncommentConsoleLog.js");
 	before(() => {
 		vscode.window.showInformationMessage('Start all tests.');
 		fs.writeFileSync(file, "//console.log('rezabasuki')");
