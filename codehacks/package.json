@@ -22,7 +22,8 @@
 		"onCommand:extension.installDependencies",
 		"onCommand:extension.commentAllLogStatements",
 		"onCommand:extension.uncommentAllLogStatements",
-		"onCommand:extension.makeComponent"
+		"onCommand:extension.makeComponentReact",
+		"onCommand:extension.makeComponentVue"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -56,8 +57,12 @@
 				"title": "Uncomment Log"
 			},
 			{
-				"command": "extension.makeComponent",
-				"title": "Make Component"
+				"command": "extension.makeComponentReact",
+				"title": "Make Component React"
+			},
+			{
+				"command": "extension.makeComponentVue",
+				"title": "Make Component Vue"
 			}
 		],
 		"keybindings": [
@@ -92,7 +97,7 @@
 				"key": "ctrl+alt+a"
 			},
 			{
-				"command": "extension.makeComponent",
+				"command": "extension.makeComponentReact",
 				"mac": "shift+cmd+'",
 				"key": "ctrl+alt+'"
 			}
