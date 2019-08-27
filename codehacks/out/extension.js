@@ -16,7 +16,8 @@ const path = require("path");
 const consoleLogger_1 = require("./consoleLogger");
 const installDependencies_1 = require("./installDependencies");
 const runSelectedCode_1 = require("./runSelectedCode");
-const makeComponent_1 = require("./makeComponent");
+const makeComponentReact_1 = require("./makeComponentReact");
+const makeComponentVue_1 = require("./makeComponentVue");
 // var consoleLogger = require("./consoleLogger")
 const fs = require('fs');
 const { basename, dirname, extname, join } = require('path');
@@ -301,7 +302,7 @@ function activate(context) {
             yield runSelectedCode_1.default(editor, selection);
         }
     }));
-    const MakeComponent = vscode.commands.registerCommand('extension.makeComponent', () => __awaiter(this, void 0, void 0, function* () {
+    const MakeComponentReact = vscode.commands.registerCommand('extension.makeComponentReact', () => __awaiter(this, void 0, void 0, function* () {
         var input = yield vscode.window.showInputBox({
             prompt: "Component Name: ",
             placeHolder: "Input your component name here.."
@@ -310,7 +311,18 @@ function activate(context) {
         if (!editor || !input) {
             return;
         }
-        yield makeComponent_1.default(editor, input);
+        yield makeComponentReact_1.default(editor, input);
+    }));
+    const MakeComponentVue = vscode.commands.registerCommand('extension.makeComponentVue', () => __awaiter(this, void 0, void 0, function* () {
+        var input = yield vscode.window.showInputBox({
+            prompt: "Component Name: ",
+            placeHolder: "Input your component name here.."
+        });
+        var editor = vscode.window.activeTextEditor;
+        if (!editor || !input) {
+            return;
+        }
+        yield makeComponentVue_1.default(editor, input);
     }));
     context.subscriptions.push(disposable);
     context.subscriptions.push(runCodeByBlock);
@@ -319,7 +331,8 @@ function activate(context) {
     context.subscriptions.push(addLogStatements);
     context.subscriptions.push(commentLogStatements);
     context.subscriptions.push(uncommentLogStatements);
-    context.subscriptions.push(MakeComponent);
+    context.subscriptions.push(MakeComponentReact);
+    context.subscriptions.push(MakeComponentVue);
 }
 exports.activate = activate;
 // this method is called when your extension is deactivated

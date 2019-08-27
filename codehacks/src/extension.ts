@@ -8,7 +8,8 @@ const path = require("path");
 import consoleLogger from "./consoleLogger";
 import InstallDependencies from "./installDependencies";
 import runSelectedCode from "./runSelectedCode";
-import makeComponent from "./makeComponent"
+import makeComponentReact from "./makeComponentReact"
+import makeComponentVue from "./makeComponentVue"
 import { stringify } from "querystring";
 import { isWorker } from "cluster";
 // var consoleLogger = require("./consoleLogger")
@@ -327,7 +328,7 @@ function activate(context: vscode.ExtensionContext) {
         }
     });
 
-    const MakeComponent = vscode.commands.registerCommand('extension.makeComponent', async() =>{
+    const MakeComponentReact = vscode.commands.registerCommand('extension.makeComponentReact', async() =>{
         
         var input = await vscode.window.showInputBox({
             prompt: "Component Name: ",
@@ -338,10 +339,22 @@ function activate(context: vscode.ExtensionContext) {
         if(!editor || !input) {
             return;
         }
-        await makeComponent(editor, input)
+        await makeComponentReact(editor, input)
     })
 
-    
+    const MakeComponentVue = vscode.commands.registerCommand('extension.makeComponentVue', async() =>{
+        
+        var input = await vscode.window.showInputBox({
+            prompt: "Component Name: ",
+            placeHolder: "Input your component name here.."
+        })
+
+        var editor = vscode.window.activeTextEditor;
+        if(!editor || !input) {
+            return;
+        }
+        await makeComponentVue(editor, input)
+    })
 
     context.subscriptions.push(disposable);
     context.subscriptions.push(runCodeByBlock);
@@ -350,7 +363,8 @@ function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(addLogStatements);
     context.subscriptions.push(commentLogStatements);
     context.subscriptions.push(uncommentLogStatements);
-    context.subscriptions.push(MakeComponent);
+    context.subscriptions.push(MakeComponentReact);
+    context.subscriptions.push(MakeComponentVue);
 }
 exports.activate = activate;
 // this method is called when your extension is deactivated

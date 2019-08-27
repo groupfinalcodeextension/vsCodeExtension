@@ -21,16 +21,26 @@ function makeComponent(editor, input) {
         var documentText = document.getText();
         var importStatements = [];
         // INSERT IMPORT STATEMENT
-        var logRegex = /import .*?from (\'.*?\'|\".*?\")/g;
+        var importRegex = /import .*?from (\'.*?\'|\".*?\")/g;
         var match;
-        while (match = logRegex.exec(documentText)) {
+        while (match = importRegex.exec(documentText)) {
             let matchRange = new vscode.Range(document.positionAt(match.index), document.positionAt(match.index + match[0].length));
             if (!matchRange.isEmpty) {
                 importStatements.push(matchRange);
             }
         }
         if (importStatements.length === 0) {
-            return;
+            var scriptRegex = /<script>/g;
+            var match2;
+            while (match2 = scriptRegex.exec(documentText)) {
+                let matchRange = new vscode.Range(document.positionAt(match2.index), document.positionAt(match2.index + match2[0].length));
+                if (!matchRange.isEmpty) {
+                    importStatements.push(matchRange);
+                }
+            }
+            if (importStatements.length === 0) {
+                return;
+            }
         }
         var lastLine = importStatements[importStatements.length - 1];
         editor.edit(edit => {
@@ -40,14 +50,20 @@ function makeComponent(editor, input) {
         //CREATE NEW FILE
         var currentDir = document.fileName;
         var myPath = path.dirname(currentDir);
-        var newComponent = path.join(myPath, `${input}.js`);
-        var content = `import React from 'react'
+        var newComponent = path.join(myPath, `${input}.vue`);
+        var content = `<template>
+  ${selectedText}
+</template>
 
-export default function ${input}() {
-    return (
-${selectedText}
-    )
+<script>
+export default {
+name: '${input}'
 }
+</script>
+
+<style>
+
+</style>
     `;
         fs.writeFileSync(newComponent, content);
         var uri = yield vscode.Uri.file(newComponent);
@@ -61,4 +77,4 @@ ${selectedText}
     });
 }
 exports.default = makeComponent;
-//# sourceMappingURL=makeComponent.js.map
+//# sourceMappingURL=makeComponentVue.js.map

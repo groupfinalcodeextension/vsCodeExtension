@@ -21,9 +21,9 @@ function makeComponent(editor, input) {
         var documentText = document.getText();
         var importStatements = [];
         // INSERT IMPORT STATEMENT
-        var logRegex = /import .*?from (\'.*?\'|\".*?\")/g;
+        var importRegex = /import .*?from (\'.*?\'|\".*?\")/g;
         var match;
-        while (match = logRegex.exec(documentText)) {
+        while (match = importRegex.exec(documentText)) {
             let matchRange = new vscode.Range(document.positionAt(match.index), document.positionAt(match.index + match[0].length));
             if (!matchRange.isEmpty) {
                 importStatements.push(matchRange);
@@ -61,4 +61,4 @@ ${selectedText}
     });
 }
 exports.default = makeComponent;
-//# sourceMappingURL=makeComponent.js.map
+//# sourceMappingURL=makeComponentReact.js.map
