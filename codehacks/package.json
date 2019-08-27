@@ -18,7 +18,8 @@
 		"onCommand:extension.commentAllLogStatements",
 		"onCommand:extension.uncommentAllLogStatements",
 		"onCommand:extension.makeComponentReact",
-		"onCommand:extension.makeComponentVue"
+		"onCommand:extension.makeComponentVue",
+		"onCommand:extension.deleteLogStatementsGlobal"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -58,6 +59,10 @@
 			{
 				"command": "extension.makeComponentVue",
 				"title": "Make Component Vue"
+			},
+			{
+				"command": "extension.deleteLogStatementsGlobal",
+				"title": "Delete Log Global"
 			}
 		],
 		"keybindings": [
@@ -117,6 +122,7 @@
 		"vscode-test": "^1.0.2"
 	},
 	"dependencies": {
+		"async": "^3.1.0",
 		"child_process": "^1.0.2",
 		"path": "^0.12.7"
 	}

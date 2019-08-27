@@ -12,6 +12,7 @@ import makeComponentReact from "./makeComponentReact"
 import makeComponentVue from "./makeComponentVue"
 import { stringify } from "querystring";
 import { isWorker } from "cluster";
+const async = require("async");
 // var consoleLogger = require("./consoleLogger")
 const fs = require('fs');
 const { basename, dirname, extname, join } = require('path');
@@ -227,11 +228,38 @@ function activate(context: vscode.ExtensionContext) {
             let logStatements = await getAllLogStatements(document, documentText);
 
 
-            console.log(logStatements, "shfehfoehfoehfea")
             let workSpaceEdit = new vscode.WorkspaceEdit();
             await deleteFoundLogStatements(workSpaceEdit, document.uri, logStatements, document);
         }
     });
+
+    const deleteLogStatementsGlobal = vscode.commands.registerCommand('extension.deleteLogStatementsGlobal', () =>{
+        function delConsoleLog(fileName: vscode.Uri, callback: Function) {
+            vscode.workspace.openTextDocument(fileName)
+                .then((currentDoc) => {
+                var currentDocText = currentDoc.getText();
+                var logStatements = getAllLogStatements(currentDoc, currentDocText);
+                var workSpaceEdit = new vscode.WorkspaceEdit;
+                deleteFoundLogStatements(workSpaceEdit, currentDoc.uri, logStatements, null);
+                return callback();
+            }, (err) => {
+                console.log(err, "ERROR");
+                return callback(err);
+            });
+        }
+        vscode.workspace.findFiles('**/*.js', '**/node_modules/**')
+            .then(filez => {
+            async.forEach(filez, delConsoleLog, (error: Error) => {
+                if (error) {
+                    console.log(error, "ERROR ASYNC");
+                }
+                else {
+                    console.log("ASYNC OR NOT");
+                }
+            });
+        });
+    })
+
     const commentLogStatements = vscode.commands.registerCommand('extension.commentAllLogStatements', async (uri: vscode.Uri) => {
         // console.log(text,"ajfaifoa")
         // const documentText = editor.document.getText();
@@ -365,6 +393,7 @@ function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(uncommentLogStatements);
     context.subscriptions.push(MakeComponentReact);
     context.subscriptions.push(MakeComponentVue);
+    context.subscriptions.push(deleteLogStatementsGlobal);
 }
 exports.activate = activate;
 // this method is called when your extension is deactivated
