@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const vscode = require("vscode");
+const path = require("path");
 function InstallDependencies(editor) {
     var documentText = editor.document.getText();
     var document = editor.document;
@@ -46,9 +47,8 @@ function InstallDependencies(editor) {
     }
     console.log(modulez);
     var currentlyOpenTabfilePath = document.fileName;
-    var temp = currentlyOpenTabfilePath.split("/");
-    temp.splice(temp.length - 1, 1);
-    var myPath = temp.join("/");
+    var myPath = path.dirname(currentlyOpenTabfilePath);
+    console.log(myPath, "<<<<<<<<<<<<<<<");
     var dependencies = modulez.join(" ");
     var terminal = null;
     if (vscode.window.activeTerminal) {
@@ -63,7 +63,8 @@ function InstallDependencies(editor) {
     // console.log(dependencies)
     if (modulez.length > 0) {
         terminal.show();
-        terminal.sendText(`cd ${myPath} && npm install ${dependencies}`);
+        terminal.sendText(`cd ${myPath}`);
+        terminal.sendText(`npm install ${dependencies}`);
         vscode.window.onDidChangeActiveTerminal(() => {
             console.log("HALOHALO");
         });
