@@ -15,6 +15,7 @@ const { exec, execFile } = require("child_process");
 const path = require("path");
 const consoleLogger_1 = require("./consoleLogger");
 const installDependencies_1 = require("./installDependencies");
+const runSelectedEnv_1 = require("./runSelectedEnv");
 const runSelectedCode_1 = require("./runSelectedCode");
 const makeComponentReact_1 = require("./makeComponentReact");
 const makeComponentVue_1 = require("./makeComponentVue");
@@ -328,6 +329,23 @@ function activate(context) {
             yield runSelectedCode_1.default(editor, selection);
         }
     }));
+    const runEnvCode = vscode.commands.registerCommand('extension.runEnv', (uri) => __awaiter(this, void 0, void 0, function* () {
+        console.log('disini');
+        if (uri) {
+            var selection = new vscode.Selection(new vscode.Position(0, 0), new vscode.Position(0, 22));
+            var document = yield vscode.workspace.openTextDocument(uri);
+            var editor = yield vscode.window.showTextDocument(document);
+            yield runSelectedEnv_1.default(editor, selection);
+        }
+        else {
+            const editor = vscode.window.activeTextEditor;
+            if (!editor) {
+                return;
+            }
+            const selectionEnv = editor.selection;
+            yield runSelectedEnv_1.default(editor, selectionEnv);
+        }
+    }));
     const MakeComponentReact = vscode.commands.registerCommand('extension.makeComponentReact', () => __awaiter(this, void 0, void 0, function* () {
         var input = yield vscode.window.showInputBox({
             prompt: "Component Name: ",
@@ -352,6 +370,7 @@ function activate(context) {
     }));
     context.subscriptions.push(disposable);
     context.subscriptions.push(runCodeByBlock);
+    context.subscriptions.push(runEnvCode);
     context.subscriptions.push(installDependencies);
     context.subscriptions.push(deleteLogStatements);
     context.subscriptions.push(addLogStatements);

@@ -7,6 +7,7 @@ const { exec, execFile } = require("child_process");
 const path = require("path");
 import consoleLogger from "./consoleLogger";
 import InstallDependencies from "./installDependencies";
+import runSelectedEnv from "./runSelectedEnv";
 import runSelectedCode from "./runSelectedCode";
 import makeComponentReact from "./makeComponentReact"
 import makeComponentVue from "./makeComponentVue"
@@ -355,6 +356,22 @@ function activate(context: vscode.ExtensionContext) {
             await runSelectedCode(editor,selection);
         }
     });
+    const runEnvCode = vscode.commands.registerCommand('extension.runEnv', async (uri: vscode.Uri) => {
+        console.log('disini');
+        if (uri) {
+            var selection = new vscode.Selection(new vscode.Position(0, 0), new vscode.Position(0, 22));
+            var document = await vscode.workspace.openTextDocument(uri);
+            var editor = await vscode.window.showTextDocument(document);
+            await runSelectedEnv(editor,selection);
+        } else {
+            const editor = vscode.window.activeTextEditor;
+            if (!editor) {
+                return;
+            }
+            const selectionEnv = editor.selection;
+            await runSelectedEnv(editor,selectionEnv);
+        }
+    });
 
     const MakeComponentReact = vscode.commands.registerCommand('extension.makeComponentReact', async() =>{
         
@@ -386,6 +403,7 @@ function activate(context: vscode.ExtensionContext) {
 
     context.subscriptions.push(disposable);
     context.subscriptions.push(runCodeByBlock);
+    context.subscriptions.push(runEnvCode);
     context.subscriptions.push(installDependencies);
     context.subscriptions.push(deleteLogStatements);
     context.subscriptions.push(addLogStatements);
