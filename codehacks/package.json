@@ -17,7 +17,8 @@
 		"onCommand:extension.installDependencies",
 		"onCommand:extension.commentAllLogStatements",
 		"onCommand:extension.uncommentAllLogStatements",
-		"onCommand:extension.makeComponent"
+		"onCommand:extension.makeComponent",
+		"onCommand:extension.runEnv"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -25,6 +26,10 @@
 			{
 				"command": "extension.helloWorld",
 				"title": "Hello World"
+			},
+			{
+				"command": "extension.runEnv",
+				"title": "Run Env"
 			},
 			{
 				"command": "extension.deleteAllLogStatements",
