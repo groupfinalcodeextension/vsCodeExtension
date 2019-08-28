@@ -15,9 +15,11 @@ const { exec, execFile } = require("child_process");
 const path = require("path");
 const consoleLogger_1 = require("./consoleLogger");
 const installDependencies_1 = require("./installDependencies");
+const runSelectedEnv_1 = require("./runSelectedEnv");
 const runSelectedCode_1 = require("./runSelectedCode");
 const makeComponentReact_1 = require("./makeComponentReact");
 const makeComponentVue_1 = require("./makeComponentVue");
+const async = require("async");
 // var consoleLogger = require("./consoleLogger")
 const fs = require('fs');
 const { basename, dirname, extname, join } = require('path');
@@ -210,11 +212,36 @@ function activate(context) {
             let document = yield vscode.workspace.openTextDocument(uri);
             let documentText = document.getText();
             let logStatements = yield getAllLogStatements(document, documentText);
-            console.log(logStatements, "shfehfoehfoehfea");
             let workSpaceEdit = new vscode.WorkspaceEdit();
             yield deleteFoundLogStatements(workSpaceEdit, document.uri, logStatements, document);
         }
     }));
+    const deleteLogStatementsGlobal = vscode.commands.registerCommand('extension.deleteLogStatementsGlobal', () => {
+        function delConsoleLog(fileName, callback) {
+            vscode.workspace.openTextDocument(fileName)
+                .then((currentDoc) => {
+                var currentDocText = currentDoc.getText();
+                var logStatements = getAllLogStatements(currentDoc, currentDocText);
+                var workSpaceEdit = new vscode.WorkspaceEdit;
+                deleteFoundLogStatements(workSpaceEdit, currentDoc.uri, logStatements, null);
+                return callback();
+            }, (err) => {
+                console.log(err, "ERROR");
+                return callback(err);
+            });
+        }
+        vscode.workspace.findFiles('**/*.js', '**/node_modules/**')
+            .then(filez => {
+            async.forEach(filez, delConsoleLog, (error) => {
+                if (error) {
+                    console.log(error, "ERROR ASYNC");
+                }
+                else {
+                    console.log("ASYNC OR NOT");
+                }
+            });
+        });
+    });
     const commentLogStatements = vscode.commands.registerCommand('extension.commentAllLogStatements', (uri) => __awaiter(this, void 0, void 0, function* () {
         // console.log(text,"ajfaifoa")
         // const documentText = editor.document.getText();
@@ -302,6 +329,23 @@ function activate(context) {
             yield runSelectedCode_1.default(editor, selection);
         }
     }));
+    const runEnvCode = vscode.commands.registerCommand('extension.runEnv', (uri) => __awaiter(this, void 0, void 0, function* () {
+        console.log('disini');
+        if (uri) {
+            var selection = new vscode.Selection(new vscode.Position(0, 0), new vscode.Position(0, 22));
+            var document = yield vscode.workspace.openTextDocument(uri);
+            var editor = yield vscode.window.showTextDocument(document);
+            yield runSelectedEnv_1.default(editor, selection);
+        }
+        else {
+            const editor = vscode.window.activeTextEditor;
+            if (!editor) {
+                return;
+            }
+            const selectionEnv = editor.selection;
+            yield runSelectedEnv_1.default(editor, selectionEnv);
+        }
+    }));
     const MakeComponentReact = vscode.commands.registerCommand('extension.makeComponentReact', () => __awaiter(this, void 0, void 0, function* () {
         var input = yield vscode.window.showInputBox({
             prompt: "Component Name: ",
@@ -326,6 +370,7 @@ function activate(context) {
     }));
     context.subscriptions.push(disposable);
     context.subscriptions.push(runCodeByBlock);
+    context.subscriptions.push(runEnvCode);
     context.subscriptions.push(installDependencies);
     context.subscriptions.push(deleteLogStatements);
     context.subscriptions.push(addLogStatements);
@@ -333,6 +378,7 @@ function activate(context) {
     context.subscriptions.push(uncommentLogStatements);
     context.subscriptions.push(MakeComponentReact);
     context.subscriptions.push(MakeComponentVue);
+    context.subscriptions.push(deleteLogStatementsGlobal);
 }
 exports.activate = activate;
 // this method is called when your extension is deactivated
