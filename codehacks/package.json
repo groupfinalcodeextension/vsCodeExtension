@@ -15,10 +15,10 @@
 		"Other"
 	],
 	"icon": "assets/logo2.jpg",
-  "galleryBanner": {
-    "color": "#34495e",
-    "theme": "dark"
-  },
+	"galleryBanner": {
+		"color": "#34495e",
+		"theme": "dark"
+	},
 	"activationEvents": [
 		"onCommand:extension.runCode",
 		"onCommand:extension.helloWorld",
@@ -28,7 +28,9 @@
 		"onCommand:extension.commentAllLogStatements",
 		"onCommand:extension.uncommentAllLogStatements",
 		"onCommand:extension.makeComponentReact",
-		"onCommand:extension.makeComponentVue"
+		"onCommand:extension.makeComponentVue",
+		"onCommand:extension.deleteLogStatementsGlobal",
+		"onCommand:extension.runEnv"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -36,6 +38,10 @@
 			{
 				"command": "extension.helloWorld",
 				"title": "Hello World"
+			},
+			{
+				"command": "extension.runEnv",
+				"title": "Run Env"
 			},
 			{
 				"command": "extension.deleteAllLogStatements",
@@ -68,6 +74,10 @@
 			{
 				"command": "extension.makeComponentVue",
 				"title": "Make Component Vue"
+			},
+			{
+				"command": "extension.deleteLogStatementsGlobal",
+				"title": "Delete Log Global"
 			}
 		],
 		"keybindings": [
@@ -132,6 +142,7 @@
 		"vscode-test": "^1.0.2"
 	},
 	"dependencies": {
+		"async": "^3.1.0",
 		"child_process": "^1.0.2",
 		"path": "^0.12.7"
 	}

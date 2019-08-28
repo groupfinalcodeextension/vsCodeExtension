@@ -9,26 +9,24 @@ import * as vscode from 'vscode';
 // import * as myExtension from '../extension';
 
 suite('Extension Test Suite', () => {
-	var pathName : string | undefined = vscode.workspace.rootPath;
-	if(!pathName){
+	var pathName: string | undefined = vscode.workspace.rootPath;
+	if (!pathName) {
 		return;
 	}
-	var file = path.join(pathName, "CodeHacksTestingAddConsoleLog.js");
+	var file = path.join(pathName, "codehacks.js");
 	before(() => {
 		vscode.window.showInformationMessage('Start all tests.');
-		fs.writeFileSync(file, "var tommy = 'very bad'");
+		fs.writeFileSync(file, "PORT");
 	});
 
-	after(() =>{
+	after(() => {
 		fs.unlinkSync(file);
 	});
 
-	test('It should execute Add Log Statements command', async() => {
+	test('It should execute create .env file and success', async () => {
 		const uri = vscode.Uri.file(file);
-		const document = await vscode.workspace.openTextDocument(uri);
-		
-		// await vscode.commands.executeCommand("extension.addLogStatements", uri);
-		
+		// await vscode.commands.executeCommand("extension.makeComponentReact", uri);
+
 		assert.equal(-1, [1, 2, 3].indexOf(5));
 		assert.equal(-1, [1, 2, 3].indexOf(0));
 	});

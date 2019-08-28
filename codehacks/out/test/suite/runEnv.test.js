@@ -21,20 +21,19 @@ suite('Extension Test Suite', () => {
     if (!pathName) {
         return;
     }
-    var file = path.join(pathName, "CodeHacksTestingAddConsoleLog.js");
+    var file = path.join(pathName, "codehacks.js");
     mocha_1.before(() => {
         vscode.window.showInformationMessage('Start all tests.');
-        fs.writeFileSync(file, "var tommy");
+        fs.writeFileSync(file, "PORT");
     });
     mocha_1.after(() => {
         fs.unlinkSync(file);
     });
-    test('It should execute Add Log Statements command and no statements are found', () => __awaiter(this, void 0, void 0, function* () {
+    test('It should execute create .env file and success', () => __awaiter(this, void 0, void 0, function* () {
         const uri = vscode.Uri.file(file);
-        const document = yield vscode.workspace.openTextDocument(uri);
-        // await vscode.commands.executeCommand("extension.addLogStatements", uri);
+        // await vscode.commands.executeCommand("extension.makeComponentReact", uri);
         assert.equal(-1, [1, 2, 3].indexOf(5));
         assert.equal(-1, [1, 2, 3].indexOf(0));
     }));
 });
-//# sourceMappingURL=errorConsoleLogger.test.js.map
+//# sourceMappingURL=runEnv.test.js.map

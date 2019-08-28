@@ -7,7 +7,7 @@ function rangeBlock() {
   }
   const selection = editor.selection;
   const range = new vscode.Range(selection.start,selection.end);
-  console.log(range);
+
   return range;
 }
 

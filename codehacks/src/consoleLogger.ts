@@ -1,7 +1,6 @@
 import * as vscode from "vscode";
 async function consoleLogger(editor: vscode.TextEditor, selection: vscode.Selection) {
     if (!editor) {
-        console.log("NGA AD EDITOR")
         return;
     }
     

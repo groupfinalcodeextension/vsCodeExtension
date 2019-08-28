@@ -1,10 +1,10 @@
-import * as vscode from "vscode"
-import * as fs from "fs"
-import * as path from "path"
+import * as vscode from "vscode";
+import * as fs from "fs";
+import * as path from "path";
 
 async function makeComponent(editor: vscode.TextEditor, input: string) {
     var selection = editor.selection;
-    var document = editor.document
+    var document = editor.document;
     var selectedText = document.getText(selection);
     var cursor = selection.start;
     var range = document.getWordRangeAtPosition(cursor);
@@ -37,8 +37,8 @@ async function makeComponent(editor: vscode.TextEditor, input: string) {
     var lastLine = importStatements[importStatements.length - 1];
     editor.edit(edit => {
         edit.insert(lastLine.end, `\nimport ${input} from "./${input}"`);
-        edit.replace(selection, `<${input} />`)
-    })
+        edit.replace(selection, `<${input} />`);
+    });
 
 
     //CREATE NEW FILE
@@ -58,12 +58,12 @@ name: '${input}'
 <style>
 
 </style>
-    `
+    `;
 
 
-    fs.writeFileSync(newComponent, content)
+    fs.writeFileSync(newComponent, content);
     var uri = await vscode.Uri.file(newComponent);
-    var newComponentFile = await vscode.window.showTextDocument(uri)
+    var newComponentFile = await vscode.window.showTextDocument(uri);
     // var lineCount = newComponentFile.document.lineCount
 
     // var startPos = new vscode.Position(0, 0)
@@ -71,9 +71,8 @@ name: '${input}'
 
     // var myRange = new vscode.Range(startPos, endPos)
 
-    await vscode.commands.executeCommand('vscode.open', uri)
-    await vscode.commands.executeCommand('editor.action.formatDocument', uri)
+    await vscode.commands.executeCommand('vscode.open', uri);
+    await vscode.commands.executeCommand('editor.action.formatDocument', uri);
 
 }
-
-export default makeComponent
+export default makeComponent;
