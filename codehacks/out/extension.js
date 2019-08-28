@@ -85,7 +85,6 @@ function deleteFoundLogStatements(workspace, docUri, logs, document) {
     }
 }
 function commentFoundStatements(workspace, docUri, logs, document) {
-    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAA");
     if (document) {
         logs.forEach((log) => {
             const documentText = document.getText(log);

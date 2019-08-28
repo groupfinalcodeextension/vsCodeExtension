@@ -37,10 +37,10 @@ async function runSelectedCode(editor: vscode.TextEditor, selection: vscode.Sele
 
             fs.accessSync(join(packageJson, '.env'), fs.constants.R_OK | fs.constants.W_OK);
             let uri = vscode.Uri.file(join(packageJson, '.env'));
-            console.log(uri)
+            console.log(uri);
             let document = await vscode.workspace.openTextDocument(uri);
             let documentText = document.getText();
-            let dataEnv = documentText.split('\n')
+            let dataEnv = documentText.split('\n');
             let dataEnvTrue = true;
             dataEnv.forEach(element => {
                 if (element.split('=')[0] === selectedText) {
@@ -48,21 +48,21 @@ async function runSelectedCode(editor: vscode.TextEditor, selection: vscode.Sele
                     return;
                 }
             });
-            console.log(dataEnvTrue, "ada ga")
+            console.log(dataEnvTrue, "ada ga");
             if (dataEnvTrue === true) {
-                console.log('disini ni')
+                console.log('disini ni');
                 var masuk = await vscode.window.showInputBox({
                     prompt: `.env ${selectedText}: `,
                     placeHolder: "Input here.."
-                })
-                dataEnv.push(`${selectedText}=${masuk}`)
-                let stringEnv = dataEnv.join('\n')
+                });
+                dataEnv.push(`${selectedText}=${masuk}`);
+                let stringEnv = dataEnv.join('\n');
                 let newData = join(packageJson, '.env');
                 fs.writeFile(newData, stringEnv, (err: object) => {
                     if (err) {
                         console.log(err);
                     }
-                    console.log('kebikin')
+                    console.log('kebikin');
     
                 });
             }
@@ -70,20 +70,20 @@ async function runSelectedCode(editor: vscode.TextEditor, selection: vscode.Sele
 
         } catch (err) {
             let codeFile = join(packageJson, '.env');
-            console.log(codeFile)
+            console.log(codeFile);
 
             var input = await vscode.window.showInputBox({
                 prompt: `.env ${selectedText}: `,
                 placeHolder: "Input here.."
-            })
+            });
             fs.writeFile(codeFile, `${selectedText}=${input}`, (err: object) => {
                 if (err) {
                     console.log(err);
                 }
-                console.log('kebikin')
+                console.log('kebikin');
 
             });
-            console.log(input)
+            console.log(input);
 
             // console.error('no access .env!');
         }
