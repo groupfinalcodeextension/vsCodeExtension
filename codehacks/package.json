@@ -15,10 +15,10 @@
 		"Other"
 	],
 	"icon": "assets/logo2.jpg",
-  "galleryBanner": {
-    "color": "#34495e",
-    "theme": "dark"
-  },
+	"galleryBanner": {
+		"color": "#34495e",
+		"theme": "dark"
+	},
 	"activationEvents": [
 		"onCommand:extension.runCode",
 		"onCommand:extension.helloWorld",

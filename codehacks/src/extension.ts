@@ -8,8 +8,8 @@ const path = require("path");
 import consoleLogger from "./consoleLogger";
 import InstallDependencies from "./installDependencies";
 import runSelectedCode from "./runSelectedCode";
-import makeComponentReact from "./makeComponentReact"
-import makeComponentVue from "./makeComponentVue"
+import makeComponentReact from "./makeComponentReact";
+import makeComponentVue from "./makeComponentVue";
 import { stringify } from "querystring";
 import { isWorker } from "cluster";
 const async = require("async");
@@ -26,18 +26,18 @@ function getAllLogStatements(document: vscode.TextDocument, documentText: string
     const logRegex = /console.(log|debug|info|warn|error|assert|dir|dirxml|trace|group|groupEnd|time|timeEnd|profile|profileEnd|count)\((.*)\);?/g;
     let match;
     while (match = logRegex.exec(documentText)) {
-        console.log(document, "didalem")
+        console.log(document, "didalem");
         // console.log(typeof document);
         // console.log(typeof documentText);
         let matchRange = new vscode.Range(document.positionAt(match.index), document.positionAt(match.index + match[0].length));
 
-        console.log(matchRange, "didalem laig range")
+        console.log(matchRange, "didalem laig range");
         if (!matchRange.isEmpty) {
             logStatements.push(matchRange);
-            console.log(logStatements, "diloopingan")
+            console.log(logStatements, "diloopingan");
         }
     }
-    console.log(logStatements, "dsioaasifjip")
+    console.log(logStatements, "dsioaasifjip");
     return logStatements;
 }
 
@@ -82,7 +82,6 @@ function deleteFoundLogStatements(workspace: vscode.WorkspaceEdit, docUri: vscod
 }
 
 function commentFoundStatements(workspace: vscode.WorkspaceEdit, docUri: vscode.Uri, logs: Array<vscode.Range>, document: vscode.TextDocument | null) {
-    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAA")
     if (document) {
         logs.forEach((log) => {
             const documentText = document.getText(log);
@@ -111,7 +110,7 @@ function commentFoundStatements(workspace: vscode.WorkspaceEdit, docUri: vscode.
         });
         vscode.workspace.applyEdit(workspace)
             .then(() => {
-                console.log("SELESAI")
+                console.log("SELESAI");
                 if (logs.length) {
                     vscode.window.showInformationMessage(`Comments ${logs.length} consoles`);
                 }
@@ -258,7 +257,7 @@ function activate(context: vscode.ExtensionContext) {
                 }
             });
         });
-    })
+    });
 
     const commentLogStatements = vscode.commands.registerCommand('extension.commentAllLogStatements', async (uri: vscode.Uri) => {
         // console.log(text,"ajfaifoa")
@@ -273,7 +272,7 @@ function activate(context: vscode.ExtensionContext) {
             let document = editor.document;
 
             let documentText = editor.document.getText();
-            console.log(document, "disnii afbjagfyagfiagfuagiaifgda")
+            console.log(document, "disnii afbjagfyagfiagfuagiaifgda");
             const logStatements = getAllLogStatements(document, documentText);
             let workSpaceEdit = new vscode.WorkspaceEdit();
             commentFoundStatements(workSpaceEdit, document.uri, logStatements, null);
@@ -284,7 +283,7 @@ function activate(context: vscode.ExtensionContext) {
             let logStatements = await getAllLogStatements(document, documentText);
 
 
-            console.log(logStatements, "shfehfoehfoehfea")
+            console.log(logStatements, "shfehfoehfoehfea");
             let workSpaceEdit = new vscode.WorkspaceEdit();
             await commentFoundStatements(workSpaceEdit, document.uri, logStatements, document);
         }
@@ -307,7 +306,7 @@ function activate(context: vscode.ExtensionContext) {
             let document = await vscode.workspace.openTextDocument(uri);
             let documentText = document.getText();
             let logStatements = await getAllCommentLogStatements(document, documentText);
-            console.log(logStatements, "shfehfoehfoehfea")
+            console.log(logStatements, "shfehfoehfoehfea");
             let workSpaceEdit = new vscode.WorkspaceEdit();
             await uncommentFoundStatements(workSpaceEdit, document.uri, logStatements, document);
 
@@ -316,17 +315,17 @@ function activate(context: vscode.ExtensionContext) {
 
     const addLogStatements = vscode.commands.registerCommand('extension.addLogStatements', async (uri: vscode.Uri) => {
         if (uri) {
-            var selection = new vscode.Selection(new vscode.Position(0, 0), new vscode.Position(0, 22))
-            var document = await vscode.workspace.openTextDocument(uri)
+            var selection = new vscode.Selection(new vscode.Position(0, 0), new vscode.Position(0, 22));
+            var document = await vscode.workspace.openTextDocument(uri);
             // console.log(editorTest.getText(), "GELLOLOLO")
-            var editorTest = await vscode.window.showTextDocument(document)
-            await consoleLogger(editorTest, selection)
+            var editorTest = await vscode.window.showTextDocument(document);
+            await consoleLogger(editorTest, selection);
         } else {
             const editor = vscode.window.activeTextEditor;
             if (!editor) {
                 return;
             }
-            const selection = editor.selection
+            const selection = editor.selection;
             await consoleLogger(editor, selection);
         }
     });
@@ -361,28 +360,28 @@ function activate(context: vscode.ExtensionContext) {
         var input = await vscode.window.showInputBox({
             prompt: "Component Name: ",
             placeHolder: "Input your component name here.."
-        })
+        });
 
         var editor = vscode.window.activeTextEditor;
         if(!editor || !input) {
             return;
         }
-        await makeComponentReact(editor, input)
-    })
+        await makeComponentReact(editor, input);
+    });
 
     const MakeComponentVue = vscode.commands.registerCommand('extension.makeComponentVue', async() =>{
         
         var input = await vscode.window.showInputBox({
             prompt: "Component Name: ",
             placeHolder: "Input your component name here.."
-        })
+        });
 
         var editor = vscode.window.activeTextEditor;
         if(!editor || !input) {
             return;
         }
-        await makeComponentVue(editor, input)
-    })
+        await makeComponentVue(editor, input);
+    });
 
     context.subscriptions.push(disposable);
     context.subscriptions.push(runCodeByBlock);
