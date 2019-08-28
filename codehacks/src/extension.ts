@@ -108,7 +108,7 @@ function uncommentFoundStatements(workspace: vscode.WorkspaceEdit, docUri: vscod
         logs.forEach((log) => {
             const documentText = document.getText(log);
             var commentRegex = /\/\//g;
-            var text = documentText.replace(commentRegex, "")
+            var text = documentText.replace(commentRegex, "");
             workspace.replace(docUri, log, `${text}`);
 
         });
@@ -129,7 +129,7 @@ function uncommentFoundStatements(workspace: vscode.WorkspaceEdit, docUri: vscod
             const documentText = editor.document.getText(log);
             
             var commentRegex = /\/\//g;
-            var text = documentText.replace(commentRegex, "")
+            var text = documentText.replace(commentRegex, "");
        
             workspace.replace(docUri, log, `${text}`);
 
@@ -202,7 +202,7 @@ function activate(context: vscode.ExtensionContext) {
 
     const deleteLogStatementsGlobal = vscode.commands.registerCommand('extension.deleteLogStatementsGlobal', () =>{
         outputChannel.clear();
-        outputChannel.show()
+        outputChannel.show();
         function delConsoleLog(fileName: vscode.Uri, callback: Function) {
             vscode.workspace.openTextDocument(fileName)
                 .then((currentDoc) => {
@@ -211,7 +211,7 @@ function activate(context: vscode.ExtensionContext) {
                 var workSpaceEdit = new vscode.WorkspaceEdit;
                 if(logStatements.length > 0) {
                     deleteFoundLogStatements(workSpaceEdit, currentDoc.uri, logStatements, null);
-                    outputChannel.appendLine(`${logStatements.length} Console Statements have been deleted in ${currentDoc.uri}`)
+                    outputChannel.appendLine(`${logStatements.length} Console Statements have been deleted in ${currentDoc.uri}`);
                 }
 
                 return callback();

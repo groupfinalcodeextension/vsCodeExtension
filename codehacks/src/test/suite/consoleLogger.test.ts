@@ -27,7 +27,7 @@ suite('Extension Test Suite', () => {
 		const uri = vscode.Uri.file(file);
 		const document = await vscode.workspace.openTextDocument(uri);
 		
-		await vscode.commands.executeCommand("extension.addLogStatements", uri);
+		// await vscode.commands.executeCommand("extension.addLogStatements", uri);
 		
 		assert.equal(-1, [1, 2, 3].indexOf(5));
 		assert.equal(-1, [1, 2, 3].indexOf(0));
