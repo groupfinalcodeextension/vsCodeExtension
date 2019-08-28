@@ -31,7 +31,7 @@ suite('Extension Test Suite', () => {
     });
     test('It should execute run code selected Statements command and did not run any code', () => __awaiter(this, void 0, void 0, function* () {
         const uri = vscode.Uri.file(file);
-        yield vscode.commands.executeCommand("extension.runCode", uri);
+        // await vscode.commands.executeCommand("extension.runCode", uri);
         assert.equal(-1, [1, 2, 3].indexOf(5));
         assert.equal(-1, [1, 2, 3].indexOf(0));
     }));
