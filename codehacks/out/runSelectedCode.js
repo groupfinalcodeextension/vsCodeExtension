@@ -17,7 +17,6 @@ function rangeBlock(editor) {
     }
     const selection = editor.selection;
     const range = new vscode.Range(selection.start, selection.end);
-    console.log(range, "disinii ni");
     return range;
 }
 function runSelectedCode(editor, selection) {
@@ -28,7 +27,6 @@ function runSelectedCode(editor, selection) {
         let fileName = document.fileName;
         let packageJson = dirname(fileName);
         let codeFile = join(dirname(fileName), 'tempFileCodeHacks.js');
-        console.log(vscode.window.activeTerminal, "disini ni");
         let terminal;
         if (vscode.window.activeTerminal) {
             terminal = vscode.window.activeTerminal;
@@ -50,9 +48,8 @@ function runSelectedCode(editor, selection) {
                     if (err) {
                         console.log(err);
                     }
-                    console.log('sip');
                 });
-            }, 700);
+            }, 1200);
         });
     });
 }

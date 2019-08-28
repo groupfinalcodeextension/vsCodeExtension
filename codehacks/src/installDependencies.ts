@@ -35,7 +35,6 @@ function InstallDependencies(editor: vscode.TextEditor) {
                 j = -1;
             }
         }
-        console.log(importStatements);
         
         var requireString = requireStatements.join(" ");
         var modulez = [];
@@ -46,17 +45,17 @@ function InstallDependencies(editor: vscode.TextEditor) {
         }
 
         var importString = importStatements.join(" ");
-        console.log(importString);
+      
         var match3;
         while(match3 = regex2.exec(importString)) {
             modulez.push(match3[0].replace(/[^a-zA-Z0-9\-@\/ ]/g, ""));
         }
    
-        console.log(modulez);
+     
         var currentlyOpenTabfilePath = document.fileName;
         var myPath = path.dirname(currentlyOpenTabfilePath);
         
-        console.log(myPath, "<<<<<<<<<<<<<<<");
+     
         var dependencies = modulez.join(" ");
 
         var terminal = null;
@@ -73,9 +72,7 @@ function InstallDependencies(editor: vscode.TextEditor) {
             terminal.show();
             terminal.sendText(`cd ${myPath}`);
             terminal.sendText(`npm install ${dependencies}`);
-            vscode.window.onDidChangeActiveTerminal(() =>{
-                console.log("HALOHALO");
-            });
+            
         } else {
             vscode.window.showInformationMessage("No dependencies found in current file");
         }

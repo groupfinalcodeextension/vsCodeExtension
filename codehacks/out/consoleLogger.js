@@ -12,7 +12,6 @@ const vscode = require("vscode");
 function consoleLogger(editor, selection) {
     return __awaiter(this, void 0, void 0, function* () {
         if (!editor) {
-            console.log("NGA AD EDITOR");
             return;
         }
         var text = editor.document.getText(selection);

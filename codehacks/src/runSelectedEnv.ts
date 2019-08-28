@@ -8,7 +8,7 @@ function rangeBlock(editor: vscode.TextEditor) {
     }
     const selection = editor.selection;
     const range = new vscode.Range(selection.start, selection.end);
-    console.log(range, "disinii ni");
+    
     return range;
 }
 
@@ -26,10 +26,10 @@ async function runSelectedCode(editor: vscode.TextEditor, selection: vscode.Sele
         try {
             fs.accessSync(join(packageJson, 'package.json'), fs.constants.R_OK | fs.constants.W_OK);
             flag = true;
-            console.log('can read/write');
+            
         } catch (err) {
             packageJson = dirname(packageJson);
-            console.error('no access!');
+         
         }
     }
     if (flag === true) {
@@ -37,7 +37,7 @@ async function runSelectedCode(editor: vscode.TextEditor, selection: vscode.Sele
 
             fs.accessSync(join(packageJson, '.env'), fs.constants.R_OK | fs.constants.W_OK);
             let uri = vscode.Uri.file(join(packageJson, '.env'));
-            console.log(uri);
+          
             let document = await vscode.workspace.openTextDocument(uri);
             let documentText = document.getText();
             let dataEnv = documentText.split('\n');
@@ -48,7 +48,7 @@ async function runSelectedCode(editor: vscode.TextEditor, selection: vscode.Sele
                     return;
                 }
             });
-            console.log(dataEnvTrue, "ada ga");
+            
             if (dataEnvTrue === true) {
                 console.log('disini ni');
                 var masuk = await vscode.window.showInputBox({
@@ -62,15 +62,15 @@ async function runSelectedCode(editor: vscode.TextEditor, selection: vscode.Sele
                     if (err) {
                         console.log(err);
                     }
-                    console.log('kebikin');
+               
     
                 });
             }
-            console.log('can read/write .env');
+           
 
         } catch (err) {
             let codeFile = join(packageJson, '.env');
-            console.log(codeFile);
+       
 
             var input = await vscode.window.showInputBox({
                 prompt: `.env ${selectedText}: `,
@@ -80,10 +80,10 @@ async function runSelectedCode(editor: vscode.TextEditor, selection: vscode.Sele
                 if (err) {
                     console.log(err);
                 }
-                console.log('kebikin');
+           
 
             });
-            console.log(input);
+           
 
             // console.error('no access .env!');
         }

@@ -17,7 +17,6 @@ function rangeBlock(editor) {
     }
     const selection = editor.selection;
     const range = new vscode.Range(selection.start, selection.end);
-    console.log(range, "disinii ni");
     return range;
 }
 function runSelectedCode(editor, selection) {
@@ -32,18 +31,15 @@ function runSelectedCode(editor, selection) {
             try {
                 fs.accessSync(join(packageJson, 'package.json'), fs.constants.R_OK | fs.constants.W_OK);
                 flag = true;
-                console.log('can read/write');
             }
             catch (err) {
                 packageJson = dirname(packageJson);
-                console.error('no access!');
             }
         }
         if (flag === true) {
             try {
                 fs.accessSync(join(packageJson, '.env'), fs.constants.R_OK | fs.constants.W_OK);
                 let uri = vscode.Uri.file(join(packageJson, '.env'));
-                console.log(uri);
                 let document = yield vscode.workspace.openTextDocument(uri);
                 let documentText = document.getText();
                 let dataEnv = documentText.split('\n');
@@ -54,7 +50,6 @@ function runSelectedCode(editor, selection) {
                         return;
                     }
                 });
-                console.log(dataEnvTrue, "ada ga");
                 if (dataEnvTrue === true) {
                     console.log('disini ni');
                     var masuk = yield vscode.window.showInputBox({
@@ -68,14 +63,11 @@ function runSelectedCode(editor, selection) {
                         if (err) {
                             console.log(err);
                         }
-                        console.log('kebikin');
                     });
                 }
-                console.log('can read/write .env');
             }
             catch (err) {
                 let codeFile = join(packageJson, '.env');
-                console.log(codeFile);
                 var input = yield vscode.window.showInputBox({
                     prompt: `.env ${selectedText}: `,
                     placeHolder: "Input here.."
@@ -84,9 +76,7 @@ function runSelectedCode(editor, selection) {
                     if (err) {
                         console.log(err);
                     }
-                    console.log('kebikin');
                 });
-                console.log(input);
                 // console.error('no access .env!');
             }
         }
