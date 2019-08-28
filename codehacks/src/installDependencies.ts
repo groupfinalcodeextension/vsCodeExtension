@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import * as path from "path"
+import * as path from "path";
 
 function InstallDependencies(editor: vscode.TextEditor) {
         var documentText = editor.document.getText();
@@ -56,7 +56,7 @@ function InstallDependencies(editor: vscode.TextEditor) {
         var currentlyOpenTabfilePath = document.fileName;
         var myPath = path.dirname(currentlyOpenTabfilePath);
         
-        console.log(myPath, "<<<<<<<<<<<<<<<")
+        console.log(myPath, "<<<<<<<<<<<<<<<");
         var dependencies = modulez.join(" ");
 
         var terminal = null;
@@ -72,10 +72,10 @@ function InstallDependencies(editor: vscode.TextEditor) {
         if(modulez.length > 0) {
             terminal.show();
             terminal.sendText(`cd ${myPath}`);
-            terminal.sendText(`npm install ${dependencies}`)
+            terminal.sendText(`npm install ${dependencies}`);
             vscode.window.onDidChangeActiveTerminal(() =>{
-                console.log("HALOHALO")
-            })
+                console.log("HALOHALO");
+            });
         } else {
             vscode.window.showInformationMessage("No dependencies found in current file");
         }
