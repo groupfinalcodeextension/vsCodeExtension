@@ -56,41 +56,43 @@ function runSelectedCode(editor, selection) {
             edit.replace(selectedLine.range, newDocVariable);
         });
         var envUris = yield vscode.workspace.findFiles(`${foundFolder}/.env`, '**/node_modules/**');
-        if (envUris.length > 0) {
-            var envFile = envUris[0];
-            var envDoc = yield vscode.window.showTextDocument(envFile);
-            var envText = envDoc.document.getText();
-            var envs = envText.split("\n");
-            var found = null;
-            var index = 0;
-            for (var i = 0; i < envs.length; i++) {
-                var envVariable = envs[i].split("=");
-                if (envVariable[0].toLocaleUpperCase() === selectedText.toLocaleUpperCase()) {
-                    found = envVariable;
-                    index = i;
-                    break;
+        setTimeout(() => __awaiter(this, void 0, void 0, function* () {
+            if (envUris.length > 0) {
+                var envFile = envUris[0];
+                var envDoc = yield vscode.window.showTextDocument(envFile);
+                var envText = envDoc.document.getText();
+                var envs = envText.split("\n");
+                var found = null;
+                var index = 0;
+                for (var i = 0; i < envs.length; i++) {
+                    var envVariable = envs[i].split("=");
+                    if (envVariable[0].toLocaleUpperCase() === selectedText.toLocaleUpperCase()) {
+                        found = envVariable;
+                        index = i;
+                        break;
+                    }
+                }
+                var newEnv = join(trueFolder, ".env");
+                var finalEnv;
+                if (!found) {
+                    envs.push(`${selectedText.toLocaleUpperCase()}=${input}`);
+                    finalEnv = envs.join("\n");
+                    fs.writeFileSync(newEnv, finalEnv);
+                    return;
+                }
+                if (found.length > 0) {
+                    found[1] = input;
+                    var newInput = found.join("=");
+                    envs.splice(index, 1, newInput);
+                    finalEnv = envs.join("\n");
+                    fs.writeFileSync(newEnv, finalEnv);
                 }
             }
-            var newEnv = join(trueFolder, ".env");
-            var finalEnv;
-            if (!found) {
-                envs.push(`${selectedText.toLocaleUpperCase()}=${input}`);
-                finalEnv = envs.join("\n");
-                fs.writeFileSync(newEnv, finalEnv);
-                return;
+            else {
+                var newEnv = join(trueFolder, ".env");
+                fs.writeFileSync(newEnv, `${selectedText.toLocaleUpperCase()}=${input}`);
             }
-            if (found.length > 0) {
-                found[1] = input;
-                var newInput = found.join("=");
-                envs.splice(index, 1, newInput);
-                finalEnv = envs.join("\n");
-                fs.writeFileSync(newEnv, finalEnv);
-            }
-        }
-        else {
-            var newEnv = join(trueFolder, ".env");
-            fs.writeFileSync(newEnv, `${selectedText.toLocaleUpperCase()}=${input}`);
-        }
+        }), 700);
         // // console.log(document.fileName,"disini");
         // let fileName = document.fileName;
         // let packageJson = dirname(fileName);
