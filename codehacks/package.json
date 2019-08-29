@@ -16,7 +16,7 @@
 	],
 	"icon": "assets/logo2.jpg",
 	"galleryBanner": {
-		"color": "#34495e",
+		"color": "#2c2c54",
 		"theme": "dark"
 	},
 	"activationEvents": [

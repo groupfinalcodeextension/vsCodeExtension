@@ -34,7 +34,7 @@ Install Through VS Code Extensions. Search for `Code Hacks`
     <li>Or you can just use shortcut CTRL + ALT + 8</li>
   </ul>
 
-  <img src="https://raw.githubusercontent.com/groupfinalcodeextension/vsCodeExtension/development/codehacks/assets/installDependencies.gif" width="800" >
+  <img src="https://raw.githubusercontent.com/groupfinalcodeextension/vsCodeExtension/master/codehacks/assets/installDependencies.gif" width="800" >
 
 <br>
 <br>
@@ -48,7 +48,7 @@ Install Through VS Code Extensions. Search for `Code Hacks`
     <li>Or you can just use shortcut CTRL + ALT + '</li>
   </ul>
 
-  <img src="https://raw.githubusercontent.com/groupfinalcodeextension/vsCodeExtension/development/codehacks/assets/makeComponentReact.gif" width="800" >
+  <img src="https://raw.githubusercontent.com/groupfinalcodeextension/vsCodeExtension/master/codehacks/assets/makeComponentReact.gif" width="800" >
 
 <br>
 <br>
@@ -62,7 +62,7 @@ Install Through VS Code Extensions. Search for `Code Hacks`
     <li>Or you can just use shortcut CTRL + ALT + V</li>
   </ul>
 
-  <img src="https://raw.githubusercontent.com/groupfinalcodeextension/vsCodeExtension/development/codehacks/assets/makeComponentVue.gif" width="800" >
+  <img src="https://raw.githubusercontent.com/groupfinalcodeextension/vsCodeExtension/master/codehacks/assets/makeComponentVue.gif" width="800" >
 
 <br>
 <br>
@@ -73,7 +73,7 @@ Install Through VS Code Extensions. Search for `Code Hacks`
     <li>Then input Console Logger and press enter or click on the suggestion</li>
     <li>Or you can just use shortcut CTRL + ALT + A</li>
   </ul>
-  <img src="https://raw.githubusercontent.com/groupfinalcodeextension/vsCodeExtension/development/codehacks/assets/makeConsole.gif" width="800" >
+  <img src="https://raw.githubusercontent.com/groupfinalcodeextension/vsCodeExtension/master/codehacks/assets/makeConsole.gif" width="800" >
 
 <br>
 <br>
@@ -84,14 +84,17 @@ Install Through VS Code Extensions. Search for `Code Hacks`
     <li>Then input Delete Log and press enter or click on the suggestion</li>
     <li>Or you can just use shortcut CTRL + ALT + I</li>
   </ul>
-  <img src="https://raw.githubusercontent.com/groupfinalcodeextension/vsCodeExtension/development/codehacks/assets/DeleteLog.gif" width="800" >
+  <img src="https://raw.githubusercontent.com/groupfinalcodeextension/vsCodeExtension/master/codehacks/assets/DeleteLog.gif" width="800" >
+
+<br>
+<br>
 
 ### Delete Log Global
   <ul>
     <li>Use shortcut CTRL + SHIFT + P</li> 
     <li>Then input Delete Log Global and press enter or click on the suggestion</li>
   </ul>
-  <img src="https://raw.githubusercontent.com/groupfinalcodeextension/vsCodeExtension/development/codehacks/assets/deleteLogGlobal.gif" width="800" >
+  <img src="https://raw.githubusercontent.com/groupfinalcodeextension/vsCodeExtension/master/codehacks/assets/deleteLogGlobal.gif" width="800" >
 
 ### Run a code
   <ul>
@@ -101,7 +104,7 @@ Install Through VS Code Extensions. Search for `Code Hacks`
     <li>Or you can just use shortcut CTRL + ALT + 7</li>
   </ul>
 
-  <img src="https://raw.githubusercontent.com/groupfinalcodeextension/vsCodeExtension/development/codehacks/assets/runCode.gif" width="800" >
+  <img src="https://raw.githubusercontent.com/groupfinalcodeextension/vsCodeExtension/master/codehacks/assets/runCode.gif" width="800" >
   
 <br>
 <br>
@@ -113,16 +116,17 @@ Install Through VS Code Extensions. Search for `Code Hacks`
     <li>Or you can just use shortcut CTRL + ALT + 0 to commment all logs and CTRL + ALT + 9 to uncomment all logs</li>
   </ul>
 
-  <img src="https://raw.githubusercontent.com/groupfinalcodeextension/vsCodeExtension/development/codehacks/assets/commentUncomment.gif" width="800" >
+  <img src="https://raw.githubusercontent.com/groupfinalcodeextension/vsCodeExtension/master/codehacks/assets/commentUncomment.gif" width="800" >
 
 
 <br>
 <br>
 
 ### Generate .env file
-  <ul>    
+  <ul>
+    <li>Select the variable</li>    
     <li>Use shortcut CTRL + SHIFT + P</li> 
     <li>Then input Run Env and press enter or click on the suggestion</li>    
   </ul>
 
-  <!-- <img src="https://raw.githubusercontent.com/groupfinalcodeextension/vsCodeExtension/development/codehacks/assets/runCode.gif" width="800" > -->
+  <img src="https://raw.githubusercontent.com/groupfinalcodeextension/vsCodeExtension/master/codehacks/assets/runEnv.gif" width="800" >
