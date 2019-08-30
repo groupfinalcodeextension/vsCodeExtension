@@ -16,7 +16,7 @@ Install Through VS Code Extensions. Search for `Code Hacks`
 
 <ul>
   <li>Installing dependencies just by require/import it on your code</li>
-  <li>Make React Component just by block/highlight the codes</li>
+  <li>Make React & Vue Component just by block/highlight the codes</li>
   <li>Delete dummy log to clean your code</li>
   <li>Generate a log on your code by blocking the lines</li>
   <li>Runing a selected function just by block it</li>
@@ -33,7 +33,7 @@ Install Through VS Code Extensions. Search for `Code Hacks`
     <li>Or you can just use shortcut CTRL + ALT + 8</li>
   </ul>
 
-  <img src="assets/installDependencies.gif" width="800" >
+  <img src="https://raw.githubusercontent.com/groupfinalcodeextension/vsCodeExtension/development/codehacks/assets/installDependencies.gif" width="800" >
 
 <br>
 <br>
@@ -47,7 +47,7 @@ Install Through VS Code Extensions. Search for `Code Hacks`
     <li>Or you can just use shortcut CTRL + ALT + '</li>
   </ul>
 
-  <img src="assets/makeComponentReact.gif" width="800" >
+  <img src="https://raw.githubusercontent.com/groupfinalcodeextension/vsCodeExtension/development/codehacks/assets/makeComponentReact.gif" width="800" >
 
 <br>
 <br>
@@ -61,7 +61,7 @@ Install Through VS Code Extensions. Search for `Code Hacks`
     <li>Or you can just use shortcut CTRL + ALT + V</li>
   </ul>
 
-  <img src="assets/makeComponentVue.gif" width="800" >
+  <img src="https://raw.githubusercontent.com/groupfinalcodeextension/vsCodeExtension/development/codehacks/assets/makeComponentVue.gif" width="800" >
 
 <br>
 <br>
@@ -72,7 +72,7 @@ Install Through VS Code Extensions. Search for `Code Hacks`
     <li>Then input Delete log and press enter or click on the suggestion</li>
     <li>Or you can just use shortcut CTRL + ALT + i</li>
   </ul>
-  <img src="assets/DeleteLog.gif" width="800" >
+  <img src="https://raw.githubusercontent.com/groupfinalcodeextension/vsCodeExtension/development/codehacks/assets/DeleteLog.gif" width="800" >
 
 ### Run a code
   <ul>
@@ -82,7 +82,7 @@ Install Through VS Code Extensions. Search for `Code Hacks`
     <li>Or you can just use shortcut CTRL + ALT + 7</li>
   </ul>
 
-  <img src="assets/runCode.gif" width="800" >
+  <img src="https://raw.githubusercontent.com/groupfinalcodeextension/vsCodeExtension/development/codehacks/assets/runCode.gif" width="800" >
   
 <br>
 <br>
@@ -94,4 +94,4 @@ Install Through VS Code Extensions. Search for `Code Hacks`
     <li>Or you can just use shortcut CTRL + ALT + 0 to commment all logs and CTRL + ALT + 9 to uncomment all logs</li>
   </ul>
 
-  <img src="assets/commentUncomment.gif" width="800" >
+  <img src="https://raw.githubusercontent.com/groupfinalcodeextension/vsCodeExtension/development/codehacks/assets/commentUncomment.gif" width="800" >
