@@ -28,8 +28,8 @@ suite('Extension Test Suite', () => {
     });
     mocha_1.after(() => {
         fs.unlinkSync(file);
-        console.log("ASD");
-        console.log("ASDWOWQEOQWIO");
+        // console.log("ASD");
+        // console.log("ASDWOWQEOQWIO");
     });
     test('It should execute delete log Statements command', () => __awaiter(this, void 0, void 0, function* () {
         const uri = vscode.Uri.file(file);
