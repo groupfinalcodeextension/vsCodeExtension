@@ -89,8 +89,8 @@ function runSelectedCode(editor, selection) {
                 }
             }
             else {
-                var newEnv = join(trueFolder, ".env");
-                fs.writeFileSync(newEnv, `${selectedText.toLocaleUpperCase()}=${input}`);
+                var newEnv2 = join(trueFolder, ".env");
+                fs.writeFileSync(newEnv2, `${selectedText.toLocaleUpperCase()}=${input}`);
             }
         }), 700);
         // // console.log(document.fileName,"disini");
