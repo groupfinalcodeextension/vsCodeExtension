@@ -36,8 +36,8 @@ async function runSelectedCode(editor: vscode.TextEditor, selection: vscode.Sele
     
     var packageUris = await vscode.workspace.findFiles("**/package.json", '**/node_modules/**');
     
-    var trueFolder: string | null = null
-    var foundFolder: string | null = null
+    var trueFolder: string | null = null;
+    var foundFolder: string | null = null;
     packageUris.forEach(uri =>{
         var packageFolder: Array<string> = dirname(uri.fsPath).split("\\");
         foundFolder = packageFolder[packageFolder.length-1];
@@ -45,66 +45,66 @@ async function runSelectedCode(editor: vscode.TextEditor, selection: vscode.Sele
             trueFolder = dirname(uri.fsPath);
         }
         
-    })
+    });
     
     if(!trueFolder) {
         return;
     }
 
-    var selectedLine = document.lineAt(selectedRange.start.line)
-    var docVariable = selectedLine.text.split("=")
+    var selectedLine = document.lineAt(selectedRange.start.line);
+    var docVariable = selectedLine.text.split("=");
     
-    docVariable[1] = ` process.env.${selectedText.toLocaleUpperCase()}`
-    var newDocVariable = docVariable.join("=")
+    docVariable[1] = ` process.env.${selectedText.toLocaleUpperCase()}`;
+    var newDocVariable = docVariable.join("=");
     editor.edit(edit =>{
-        edit.replace(selectedLine.range, newDocVariable)
-    })
+        edit.replace(selectedLine.range, newDocVariable);
+    });
     
     var envUris = await vscode.workspace.findFiles(`${foundFolder}/.env`, '**/node_modules/**');
 
     setTimeout(async() =>{
         if(envUris.length > 0) {
-            var envFile: vscode.Uri = envUris[0]
-            var envDoc: vscode.TextEditor = await vscode.window.showTextDocument(envFile)
-            var envText = envDoc.document.getText()
-            var envs = envText.split("\n")
-            var found: Array<string> | null = null
-            var index = 0
+            var envFile: vscode.Uri = envUris[0];
+            var envDoc: vscode.TextEditor = await vscode.window.showTextDocument(envFile);
+            var envText = envDoc.document.getText();
+            var envs = envText.split("\n");
+            var found: Array<string> | null = null;
+            var index = 0;
             for(var i = 0; i < envs.length; i++) {
-                var envVariable = envs[i].split("=")
+                var envVariable = envs[i].split("=");
                 if(envVariable[0].toLocaleUpperCase() === selectedText.toLocaleUpperCase()) {
-                    found = envVariable
-                    index = i
+                    found = envVariable;
+                    index = i;
                     break;
                 }
             }
     
             
     
-            var newEnv = join(trueFolder, ".env")
+            var newEnv = join(trueFolder, ".env");
             var finalEnv;
     
             if(!found) {
-                envs.push(`${selectedText.toLocaleUpperCase()}=${input}`)
-                finalEnv = envs.join("\n")
-                fs.writeFileSync(newEnv, finalEnv)
+                envs.push(`${selectedText.toLocaleUpperCase()}=${input}`);
+                finalEnv = envs.join("\n");
+                fs.writeFileSync(newEnv, finalEnv);
                 return;
             }
          
             if(found.length > 0) {
-                found[1] = input!
-                var newInput = found.join("=")
-                envs.splice(index, 1, newInput)
-                finalEnv = envs.join("\n")
-                fs.writeFileSync(newEnv, finalEnv)
+                found[1] = input!;
+                var newInput = found.join("=");
+                envs.splice(index, 1, newInput);
+                finalEnv = envs.join("\n");
+                fs.writeFileSync(newEnv, finalEnv);
             }
             
         } else {
-            var newEnv = join(trueFolder, ".env")
-            fs.writeFileSync(newEnv, `${selectedText.toLocaleUpperCase()}=${input}`)
+            var newEnv2 = join(trueFolder, ".env");
+            fs.writeFileSync(newEnv2, `${selectedText.toLocaleUpperCase()}=${input}`);
         }
 
-    }, 700)
+    }, 700);
 
     // // console.log(document.fileName,"disini");
     // let fileName = document.fileName;
